@@ -7,10 +7,10 @@
 <ul>
 <li>Presentation (Activity/Fragment and Presenter)</li>
 <li>Domain (Interactor/Usecases, Repository Interface and Model classes)</li>
-<li>Data (Local/remote datastore and Respository implementation)</li>
+<li>Data (Local/remote datastore and Repository implementation)</li>
 </ul>
 
-<b>Dependecy between compoents</b>
+<b>Dependencies between components</b>
  
  Activity/Fragment  --> Presenter --> Usecase(Interactor) --> Repository --> LocalDataStore(Room DB)
 
