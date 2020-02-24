@@ -13,8 +13,8 @@ public class TestConstants {
     public static final String USER_NAME = "Kalyan";
     public static final String PASSWORD = "password";
 
-    public static final String ERROR_CODE = "errorcode";
-    public static final String ERROR_MESSAGE = "errormessage";
+    public static final String ERROR_CODE = "00002";
+    public static final String ERROR_MESSAGE = "No data available";
 
 
     public static final int USER_ID = 1;

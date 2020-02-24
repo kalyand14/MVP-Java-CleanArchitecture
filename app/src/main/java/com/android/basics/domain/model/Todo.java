@@ -1,6 +1,23 @@
 package com.android.basics.domain.model;
 
 public class Todo {
+
+    private int todoId;
+    private int userId;
+    private String name;
+    private String description;
+    private String dueDate;
+    private boolean isCompleted;
+
+    public Todo(int todoId, int userId, String name, String description, String dueDate, boolean isCompleted) {
+        this.todoId = todoId;
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.isCompleted = isCompleted;
+    }
+
     public int getTodoId() {
         return todoId;
     }
@@ -49,19 +66,5 @@ public class Todo {
         isCompleted = completed;
     }
 
-    private int todoId;
-    private int userId;
-    private String name;
-    private String description;
-    private String dueDate;
-    private boolean isCompleted;
 
-    public Todo(int todoId, int userId, String name, String description, String dueDate, boolean isCompleted) {
-        this.todoId = todoId;
-        this.userId = userId;
-        this.name = name;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.isCompleted = isCompleted;
-    }
 }
