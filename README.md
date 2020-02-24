@@ -44,3 +44,8 @@ At a glance:
  </ul>
 
 <b>References</b>
+
+Jacoco test report integration - https://github.com/arturdm/jacoco-android-gradle-plugin  <br>
+Travis-Ci integration - https://github.com/codecov/example-android/blob/master/.travis.yml <br>
+Codecov and Travis-Ci integration - https://github.com/codecov/example-android  <br>
+
