@@ -1,3 +1,6 @@
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bf47906ba27847f9b0e47bba8ab8a30e)](https://app.codacy.com/manual/kalyand14/MVP-Java-CleanArchitecture?utm_source=github.com&utm_medium=referral&utm_content=kalyand14/MVP-Java-CleanArchitecture&utm_campaign=Badge_Grade_Dashboard)
+
 <H1>Todo Application</H1>
 
   A sample android app that shows Clean Architecture implementation using MVP design pattern. 
@@ -7,10 +10,10 @@
 <ul>
 <li>Presentation (Activity/Fragment and Presenter)</li>
 <li>Domain (Interactor/Usecases, Repository Interface and Model classes)</li>
-<li>Data (Local/remote datastore and Respository implementation)</li>
+<li>Data (Local/remote datastore and Repository implementation)</li>
 </ul>
 
-<b>Dependecy between compoents</b>
+<b>Dependencies between components</b>
  
  Activity/Fragment  --> Presenter --> Usecase(Interactor) --> Repository --> LocalDataStore(Room DB)
 
