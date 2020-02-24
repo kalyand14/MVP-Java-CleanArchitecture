@@ -32,7 +32,7 @@ public class RegisterUserInteractor extends UseCase<RegisterUserInteractor.Param
         });
     }
 
-    public static final class Params {
+    public static class Params {
         private String userName;
         private String password;
 

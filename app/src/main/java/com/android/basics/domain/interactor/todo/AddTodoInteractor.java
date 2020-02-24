@@ -31,7 +31,7 @@ public class AddTodoInteractor extends UseCase<AddTodoInteractor.Params, Boolean
         });
     }
 
-    public static final class Params {
+    public static class Params {
         private int userId;
         private String name;
         private String description;

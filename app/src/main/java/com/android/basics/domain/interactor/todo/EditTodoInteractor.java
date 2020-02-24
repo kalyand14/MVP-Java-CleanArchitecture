@@ -31,7 +31,7 @@ public class EditTodoInteractor extends UseCase<EditTodoInteractor.Params, Boole
         });
     }
 
-    public static final class Params {
+    public static class Params {
         private int todoId;
         private String name;
         private String description;

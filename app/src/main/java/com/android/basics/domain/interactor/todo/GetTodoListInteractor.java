@@ -34,7 +34,7 @@ public class GetTodoListInteractor extends UseCase<GetTodoListInteractor.Params,
         });
     }
 
-    public static final class Params {
+    public static class Params {
 
         private final int userId;
 

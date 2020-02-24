@@ -46,6 +46,11 @@ At a glance:
 
 <b>References</b>
 
+Unit testing
+<ul>
+  <li>https://fernandocejas.com/2014/04/08/unit-testing-asynchronous-methods-with-mockito/</li>
+  <li>https://www.codota.com/code/java/methods/org.mockito.Mockito/anyList</li>
+</ul>
 Jacoco test report integration - https://github.com/arturdm/jacoco-android-gradle-plugin  <br>
 Travis-Ci integration - https://github.com/codecov/example-android/blob/master/.travis.yml <br>
 Codecov and Travis-Ci integration - https://github.com/codecov/example-android  <br>
