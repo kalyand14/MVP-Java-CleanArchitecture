@@ -33,7 +33,7 @@ public class AuthenticateUserInteractor extends UseCase<AuthenticateUserInteract
 
     }
 
-    public static final class Params {
+    public static class Params {
         private String userName;
         private String password;
 
