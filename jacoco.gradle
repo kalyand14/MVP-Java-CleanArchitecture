@@ -42,7 +42,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: [
             '**/**Mocked',
             '**/**di',
             '**/**Injector',
-            '**/**Dao',
             '**/**Database'
     ]
     //Define your source and your classes: we want to test the production code

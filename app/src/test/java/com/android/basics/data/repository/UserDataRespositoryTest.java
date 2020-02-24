@@ -32,13 +32,10 @@ public class UserDataRespositoryTest {
     private UserDataRespository userDataRespository;
     @Captor
     private ArgumentCaptor<DaoCallback<User>> callbackArgumentCaptor;
-
     @Mock
     private Callback<User> userCallback;
-
     @Mock
     private UserTbl userTbl;
-
     @Mock
     private User user;
 
