@@ -1,4 +1,5 @@
-
+[![Build Status](https://travis-ci.org/kalyand14/MVP-Java-CleanArchitecture.svg?branch=master)](https://travis-ci.org/kalyand14/MVP-Java-CleanArchitecture)
+[![codecov](https://codecov.io/gh/kalyand14/MVP-Java-CleanArchitecture/branch/master/graph/badge.svg)](https://codecov.io/gh/kalyand14/MVP-Java-CleanArchitecture)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bf47906ba27847f9b0e47bba8ab8a30e)](https://app.codacy.com/manual/kalyand14/MVP-Java-CleanArchitecture?utm_source=github.com&utm_medium=referral&utm_content=kalyand14/MVP-Java-CleanArchitecture&utm_campaign=Badge_Grade_Dashboard)
 
 <H1>Todo Application</H1>
