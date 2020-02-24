@@ -52,6 +52,8 @@ dependencies {
     annotationProcessor deps.lifecycle.compiler
 
     testImplementation deps.junit
+    testImplementation deps.mockito.core
+
     androidTestImplementation deps.atsl.ext_junit
     androidTestImplementation deps.atsl.runner
     androidTestImplementation deps.atsl.rules
