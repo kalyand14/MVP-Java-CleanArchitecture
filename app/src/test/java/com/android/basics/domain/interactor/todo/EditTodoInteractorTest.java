@@ -1,6 +1,6 @@
 package com.android.basics.domain.interactor.todo;
 
-import com.android.basics.TestConstants;
+import com.android.basics.TestUtil;
 import com.android.basics.core.Callback;
 import com.android.basics.domain.repository.TodoRepository;
 
@@ -38,17 +38,17 @@ public class EditTodoInteractorTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        params = EditTodoInteractor.Params.forTodo(TestConstants.TODO_ID, TestConstants.USER_NAME, TestConstants.DESCRIPTION, TestConstants.DATE);
+        params = EditTodoInteractor.Params.forTodo(TestUtil.TODO_ID, TestUtil.USER_NAME, TestUtil.DESCRIPTION, TestUtil.DATE);
     }
 
     @Test
     public void testExecute_for_success() {
         interactor.executeTask(params, todoCallback);
         verify(todoRepository).editTodo(
-                eq(TestConstants.TODO_ID),
-                eq(TestConstants.USER_NAME),
-                eq(TestConstants.DESCRIPTION),
-                eq(TestConstants.DATE),
+                eq(TestUtil.TODO_ID),
+                eq(TestUtil.USER_NAME),
+                eq(TestUtil.DESCRIPTION),
+                eq(TestUtil.DATE),
                 todoCallbackCaptor.capture()
         );
         todoCallbackCaptor.getValue().onResponse(IS_UPDATED);
@@ -60,10 +60,10 @@ public class EditTodoInteractorTest {
         interactor.dispose();
         interactor.executeTask(params, todoCallback);
         verify(todoRepository).editTodo(
-                eq(TestConstants.TODO_ID),
-                eq(TestConstants.USER_NAME),
-                eq(TestConstants.DESCRIPTION),
-                eq(TestConstants.DATE),
+                eq(TestUtil.TODO_ID),
+                eq(TestUtil.USER_NAME),
+                eq(TestUtil.DESCRIPTION),
+                eq(TestUtil.DATE),
                 todoCallbackCaptor.capture()
         );
         todoCallbackCaptor.getValue().onResponse(IS_UPDATED);
@@ -74,14 +74,14 @@ public class EditTodoInteractorTest {
     public void testExecute_forfailure() {
         interactor.executeTask(params, todoCallback);
         verify(todoRepository).editTodo(
-                eq(TestConstants.TODO_ID),
-                eq(TestConstants.USER_NAME),
-                eq(TestConstants.DESCRIPTION),
-                eq(TestConstants.DATE),
+                eq(TestUtil.TODO_ID),
+                eq(TestUtil.USER_NAME),
+                eq(TestUtil.DESCRIPTION),
+                eq(TestUtil.DATE),
                 todoCallbackCaptor.capture()
         );
-        todoCallbackCaptor.getValue().onError(TestConstants.ERROR_CODE, TestConstants.ERROR_MESSAGE);
-        verify(todoCallback).onError(TestConstants.ERROR_CODE, TestConstants.ERROR_MESSAGE);
+        todoCallbackCaptor.getValue().onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
+        verify(todoCallback).onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
     }
 
     @Test
@@ -89,13 +89,13 @@ public class EditTodoInteractorTest {
         interactor.dispose();
         interactor.executeTask(params, todoCallback);
         verify(todoRepository).editTodo(
-                eq(TestConstants.TODO_ID),
-                eq(TestConstants.USER_NAME),
-                eq(TestConstants.DESCRIPTION),
-                eq(TestConstants.DATE),
+                eq(TestUtil.TODO_ID),
+                eq(TestUtil.USER_NAME),
+                eq(TestUtil.DESCRIPTION),
+                eq(TestUtil.DATE),
                 todoCallbackCaptor.capture()
         );
-        todoCallbackCaptor.getValue().onError(TestConstants.ERROR_CODE, TestConstants.ERROR_MESSAGE);
-        verify(todoCallback, never()).onError(TestConstants.ERROR_CODE, TestConstants.ERROR_MESSAGE);
+        todoCallbackCaptor.getValue().onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
+        verify(todoCallback, never()).onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
     }
 }

@@ -1,6 +1,6 @@
 package com.android.basics.domain.interactor.user;
 
-import com.android.basics.TestConstants;
+import com.android.basics.TestUtil;
 import com.android.basics.core.Callback;
 import com.android.basics.domain.model.User;
 import com.android.basics.domain.repository.UserRepository;
@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -45,13 +44,13 @@ public class RegisterUserInteractorTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        params = RegisterUserInteractor.Params.forUser(TestConstants.USER_NAME, TestConstants.PASSWORD);
+        params = RegisterUserInteractor.Params.forUser(TestUtil.USER_NAME, TestUtil.PASSWORD);
     }
 
     @Test
     public void testExecute_for_success() {
         interactor.executeTask(params, userCallback);
-        verify(userRepository).register(eq(TestConstants.USER_NAME), eq(TestConstants.PASSWORD), userCallbackCaptor.capture());
+        verify(userRepository).register(eq(TestUtil.USER_NAME), eq(TestUtil.PASSWORD), userCallbackCaptor.capture());
         userCallbackCaptor.getValue().onResponse(user);
         verify(userCallback).onResponse(user);
     }
@@ -60,7 +59,7 @@ public class RegisterUserInteractorTest {
     public void testExecute_for_success_diposed() {
         interactor.dispose();
         interactor.executeTask(params, userCallback);
-        verify(userRepository).register(eq(TestConstants.USER_NAME), eq(TestConstants.PASSWORD), userCallbackCaptor.capture());
+        verify(userRepository).register(eq(TestUtil.USER_NAME), eq(TestUtil.PASSWORD), userCallbackCaptor.capture());
         userCallbackCaptor.getValue().onResponse(user);
         verify(userCallback, never()).onResponse(user);
     }
@@ -68,17 +67,17 @@ public class RegisterUserInteractorTest {
     @Test
     public void testExecute_forfailure() {
         interactor.executeTask(params, userCallback);
-        verify(userRepository).register(eq(TestConstants.USER_NAME), eq(TestConstants.PASSWORD), userCallbackCaptor.capture());
-        userCallbackCaptor.getValue().onError(TestConstants.ERROR_CODE, TestConstants.ERROR_MESSAGE);
-        verify(userCallback).onError(TestConstants.ERROR_CODE, TestConstants.ERROR_MESSAGE);
+        verify(userRepository).register(eq(TestUtil.USER_NAME), eq(TestUtil.PASSWORD), userCallbackCaptor.capture());
+        userCallbackCaptor.getValue().onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
+        verify(userCallback).onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
     }
 
     @Test
     public void testExecute_forfailure_dispose() {
         interactor.dispose();
         interactor.executeTask(params, userCallback);
-        verify(userRepository).register(eq(TestConstants.USER_NAME), eq(TestConstants.PASSWORD), userCallbackCaptor.capture());
-        userCallbackCaptor.getValue().onError(TestConstants.ERROR_CODE, TestConstants.ERROR_MESSAGE);
-        verify(userCallback, never()).onError(TestConstants.ERROR_CODE, TestConstants.ERROR_MESSAGE);
+        verify(userRepository).register(eq(TestUtil.USER_NAME), eq(TestUtil.PASSWORD), userCallbackCaptor.capture());
+        userCallbackCaptor.getValue().onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
+        verify(userCallback, never()).onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
     }
 }

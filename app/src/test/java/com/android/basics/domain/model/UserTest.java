@@ -1,6 +1,6 @@
 package com.android.basics.domain.model;
 
-import com.android.basics.TestConstants;
+import com.android.basics.TestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,14 +12,14 @@ public class UserTest {
 
     @Before
     public void setUp() {
-        user = new User(TestConstants.USER_ID, TestConstants.USER_NAME, TestConstants.PASSWORD);
+        user = new User(TestUtil.USER_ID, TestUtil.USER_NAME, TestUtil.PASSWORD);
     }
 
     @Test
     public void test_getter() {
-        Assert.assertEquals(TestConstants.USER_ID, user.getUserId());
-        Assert.assertEquals(TestConstants.USER_NAME, user.getUserName());
-        Assert.assertEquals(TestConstants.PASSWORD, user.getPassword());
+        Assert.assertEquals(TestUtil.USER_ID, user.getUserId());
+        Assert.assertEquals(TestUtil.USER_NAME, user.getUserName());
+        Assert.assertEquals(TestUtil.PASSWORD, user.getPassword());
     }
 
     @Test

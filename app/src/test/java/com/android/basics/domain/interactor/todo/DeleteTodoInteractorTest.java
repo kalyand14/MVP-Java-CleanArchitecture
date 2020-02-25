@@ -1,6 +1,6 @@
 package com.android.basics.domain.interactor.todo;
 
-import com.android.basics.TestConstants;
+import com.android.basics.TestUtil;
 import com.android.basics.core.Callback;
 import com.android.basics.domain.repository.TodoRepository;
 
@@ -41,8 +41,8 @@ public class DeleteTodoInteractorTest {
 
     @Test
     public void testExecute_for_success() {
-        interactor.executeTask(TestConstants.TODO_ID, todoCallback);
-        verify(todoRepository).deleteTodo(eq(TestConstants.TODO_ID), todoCallbackCaptor.capture());
+        interactor.executeTask(TestUtil.TODO_ID, todoCallback);
+        verify(todoRepository).deleteTodo(eq(TestUtil.TODO_ID), todoCallbackCaptor.capture());
         todoCallbackCaptor.getValue().onResponse(IS_DELETED);
         verify(todoCallback).onResponse(IS_DELETED);
     }
@@ -50,26 +50,26 @@ public class DeleteTodoInteractorTest {
     @Test
     public void testExecute_for_success_diposed() {
         interactor.dispose();
-        interactor.executeTask(TestConstants.TODO_ID, todoCallback);
-        verify(todoRepository).deleteTodo(eq(TestConstants.TODO_ID), todoCallbackCaptor.capture());
+        interactor.executeTask(TestUtil.TODO_ID, todoCallback);
+        verify(todoRepository).deleteTodo(eq(TestUtil.TODO_ID), todoCallbackCaptor.capture());
         todoCallbackCaptor.getValue().onResponse(IS_DELETED);
         verify(todoCallback, never()).onResponse(IS_DELETED);
     }
 
     @Test
     public void testExecute_forfailure() {
-        interactor.executeTask(TestConstants.TODO_ID, todoCallback);
-        verify(todoRepository).deleteTodo(eq(TestConstants.TODO_ID), todoCallbackCaptor.capture());
-        todoCallbackCaptor.getValue().onError(TestConstants.ERROR_CODE, TestConstants.ERROR_MESSAGE);
-        verify(todoCallback).onError(TestConstants.ERROR_CODE, TestConstants.ERROR_MESSAGE);
+        interactor.executeTask(TestUtil.TODO_ID, todoCallback);
+        verify(todoRepository).deleteTodo(eq(TestUtil.TODO_ID), todoCallbackCaptor.capture());
+        todoCallbackCaptor.getValue().onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
+        verify(todoCallback).onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
     }
 
     @Test
     public void testExecute_forfailure_disposed() {
         interactor.dispose();
-        interactor.executeTask(TestConstants.TODO_ID, todoCallback);
-        verify(todoRepository).deleteTodo(eq(TestConstants.TODO_ID), todoCallbackCaptor.capture());
-        todoCallbackCaptor.getValue().onError(TestConstants.ERROR_CODE, TestConstants.ERROR_MESSAGE);
-        verify(todoCallback, never()).onError(TestConstants.ERROR_CODE, TestConstants.ERROR_MESSAGE);
+        interactor.executeTask(TestUtil.TODO_ID, todoCallback);
+        verify(todoRepository).deleteTodo(eq(TestUtil.TODO_ID), todoCallbackCaptor.capture());
+        todoCallbackCaptor.getValue().onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
+        verify(todoCallback, never()).onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
     }
 }

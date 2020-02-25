@@ -1,6 +1,6 @@
 package com.android.basics.domain.model;
 
-import com.android.basics.TestConstants;
+import com.android.basics.TestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,16 +12,16 @@ public class TodoTest {
 
     @Before
     public void setUp() {
-        todo = new Todo(TestConstants.TODO_ID, TestConstants.USER_ID, TestConstants.USER_NAME, TestConstants.DESCRIPTION, TestConstants.DATE, false);
+        todo = new Todo(TestUtil.TODO_ID, TestUtil.USER_ID, TestUtil.USER_NAME, TestUtil.DESCRIPTION, TestUtil.DATE, false);
     }
 
     @Test
     public void test_getter() {
-        Assert.assertEquals(TestConstants.TODO_ID, todo.getTodoId());
-        Assert.assertEquals(TestConstants.USER_ID, todo.getUserId());
-        Assert.assertEquals(TestConstants.USER_NAME, todo.getName());
-        Assert.assertEquals(TestConstants.DESCRIPTION, todo.getDescription());
-        Assert.assertEquals(TestConstants.DATE, todo.getDueDate());
+        Assert.assertEquals(TestUtil.TODO_ID, todo.getTodoId());
+        Assert.assertEquals(TestUtil.USER_ID, todo.getUserId());
+        Assert.assertEquals(TestUtil.USER_NAME, todo.getName());
+        Assert.assertEquals(TestUtil.DESCRIPTION, todo.getDescription());
+        Assert.assertEquals(TestUtil.DATE, todo.getDueDate());
         Assert.assertFalse(todo.isCompleted());
     }
 
