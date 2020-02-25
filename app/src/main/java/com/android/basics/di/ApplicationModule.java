@@ -13,8 +13,8 @@ import com.android.basics.data.component.DaoExecutor;
 import com.android.basics.data.mapper.TodoListMapper;
 import com.android.basics.data.mapper.TodoMapper;
 import com.android.basics.data.mapper.UserMapper;
-import com.android.basics.data.repository.TodoDataRespository;
-import com.android.basics.data.repository.UserDataRespository;
+import com.android.basics.data.repository.TodoDataRepository;
+import com.android.basics.data.repository.UserDataRepository;
 import com.android.basics.data.source.TodoDatabase;
 import com.android.basics.data.source.dao.TodoDao;
 import com.android.basics.data.source.dao.UserDao;
@@ -43,11 +43,11 @@ public class ApplicationModule {
     }
 
     public UserRepository provideUserRepository(DaoExecutor daoExecutor, UserDao userDao, UserMapper userMapper) {
-        return new UserDataRespository(daoExecutor, userDao, userMapper);
+        return new UserDataRepository(daoExecutor, userDao, userMapper);
     }
 
     public TodoRepository provideTodoRepository(DaoExecutor daoExecutor, TodoDao userDao, TodoListMapper todoListMapper, TodoMapper todoMapper) {
-        return new TodoDataRespository(daoExecutor, userDao, todoListMapper, todoMapper);
+        return new TodoDataRepository(daoExecutor, userDao, todoListMapper, todoMapper);
     }
 
     public DaoExecutor provideDaoExecutor() {

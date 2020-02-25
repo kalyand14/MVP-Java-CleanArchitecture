@@ -48,6 +48,7 @@ At a glance:
 
 Unit testing
 <ul>
+  <li>https://www.pluralsight.com/guides/mvp-with-testing-part-2</li>
   <li>https://fernandocejas.com/2014/04/08/unit-testing-asynchronous-methods-with-mockito/</li>
   <li>https://www.codota.com/code/java/methods/org.mockito.Mockito/anyList</li>
 </ul>

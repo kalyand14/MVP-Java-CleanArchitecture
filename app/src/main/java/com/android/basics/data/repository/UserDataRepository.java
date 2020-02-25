@@ -8,13 +8,13 @@ import com.android.basics.data.source.dao.UserDao;
 import com.android.basics.domain.model.User;
 import com.android.basics.domain.repository.UserRepository;
 
-public class UserDataRespository implements UserRepository {
+public class UserDataRepository implements UserRepository {
 
     private UserDao userDao;
     private UserMapper userMapper;
     private DaoExecutor daoExecutor;
 
-    public UserDataRespository(DaoExecutor daoExecutor, UserDao userDao, UserMapper userMapper) {
+    public UserDataRepository(DaoExecutor daoExecutor, UserDao userDao, UserMapper userMapper) {
         this.daoExecutor = daoExecutor;
         this.userDao = userDao;
         this.userMapper = userMapper;

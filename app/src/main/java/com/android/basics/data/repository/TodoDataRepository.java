@@ -12,14 +12,14 @@ import com.android.basics.domain.repository.TodoRepository;
 
 import java.util.List;
 
-public class TodoDataRespository implements TodoRepository {
+public class TodoDataRepository implements TodoRepository {
 
     private TodoDao todoDao;
     private DaoExecutor daoExecutor;
     private TodoListMapper todoListMapper;
     private TodoMapper todoMapper;
 
-    public TodoDataRespository(DaoExecutor daoExecutor, TodoDao todoDao, TodoListMapper todoListMapper, TodoMapper todoMapper) {
+    public TodoDataRepository(DaoExecutor daoExecutor, TodoDao todoDao, TodoListMapper todoListMapper, TodoMapper todoMapper) {
         this.todoDao = todoDao;
         this.daoExecutor = daoExecutor;
         this.todoListMapper = todoListMapper;
@@ -127,7 +127,7 @@ public class TodoDataRespository implements TodoRepository {
                 if (response == 1) {
                     callback.onResponse(true);
                 } else {
-                    callback.onError("00002", "Update failed");
+                    callback.onError("00002", "Delete failed");
                 }
             }
         };

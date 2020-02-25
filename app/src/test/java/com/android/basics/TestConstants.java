@@ -15,13 +15,18 @@ public class TestConstants {
 
     public static final String ERROR_CODE = "00002";
     public static final String ERROR_MESSAGE = "No data available";
+    public static final String EDIT_ERROR_MESSAGE = "Update failed";
+    public static final String INSERT_ERROR_MESSAGE = "insert failed";
+    public static final String DELETE_ERROR_MESSAGE = "Delete failed";
 
 
     public static final int USER_ID = 1;
+    public static final int TODO_ID = 1;
+    public static final long TODO_ID_LONG = 1;
+    public static final long TODO_ID_LONG_NULL = -1;
+    public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
     public static final String DATE = "date";
-
-    public static final int TODO_ID = 1;
 
     public static List<Todo> buildMockTodList() {
         List<Todo> todoList = new ArrayList<>();

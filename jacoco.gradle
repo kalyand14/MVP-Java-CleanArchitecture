@@ -40,9 +40,9 @@ task jacocoTestReport(type: JacocoReport, dependsOn: [
             '**/**_ViewBinding**',
             '**/*EventType.*',
             '**/**Mocked',
-            '**/**di',
-            '**/**Injector',
-            '**/**Database'
+            'com/android/basics/di/**/**.*',
+            'com/android/basics/**/**Injector*.*',
+            'com/android/basics/data/source/**/**.*'
     ]
     //Define your source and your classes: we want to test the production code
     def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
