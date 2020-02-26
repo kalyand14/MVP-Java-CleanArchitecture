@@ -53,7 +53,13 @@ Unit testing
   <li>https://www.codota.com/code/java/methods/org.mockito.Mockito/anyList</li>
   <li>https://github.com/techyourchance/unit-testing-in-android-course</li>
 </ul>
-Jacoco test report integration - https://github.com/arturdm/jacoco-android-gradle-plugin  <br>
+
+Jacoco test report integration
+ <ul>
+     <li> https://github.com/arturdm/jacoco-android-gradle-plugin </li>
+     <li> https://medium.com/@kliment.jonceski/unit-and-integration-tests-coverage-with-jacoco-sonarqube-for-multi-product-flavor-builds-b0937f534bff </li>
+ </ul>
+
 Travis-Ci integration - https://github.com/codecov/example-android/blob/master/.travis.yml <br>
 Codecov and Travis-Ci integration - https://github.com/codecov/example-android  <br>
 

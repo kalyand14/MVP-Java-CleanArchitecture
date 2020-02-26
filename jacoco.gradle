@@ -44,12 +44,22 @@ task jacocoTestReport(type: JacocoReport, dependsOn: [
             'com/android/basics/**/**Injector*.*',
             'com/android/basics/data/source/**/**.*'
     ]
+
+    afterEvaluate {
+        classDirectories += files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: [ 'com/android/basics/di/**.*',
+                               'com/android/basics/**/**Injector*.*',
+                               'com/android/basics/data/source/**/**.*'])
+        })
+    }
+
     //Define your source and your classes: we want to test the production code
     def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
     def mainSrc = "${project.projectDir}/src/main/java"
     //Explain to Jacoco where is your source code
     sourceDirectories = files([mainSrc])
-//Explain to Jacoco where are you .class file
+    //Explain to Jacoco where are you .class file
     classDirectories = files([debugTree])
     //As you want to gather all your tests reports, add the ec and exec you want to be took into
     //account when generating the report
