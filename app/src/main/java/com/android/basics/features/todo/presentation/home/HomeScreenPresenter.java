@@ -89,6 +89,7 @@ public class HomeScreenPresenter implements HomeScreenContract.Presenter {
 
     @Override
     public void detach() {
+        getTodoListInteractor.dispose();
         view = null;
     }
 }

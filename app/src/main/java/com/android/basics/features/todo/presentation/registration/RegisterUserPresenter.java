@@ -1,6 +1,7 @@
 package com.android.basics.features.todo.presentation.registration;
 
 import com.android.basics.core.domain.Callback;
+import com.android.basics.core.utils.DoIfNotNull;
 import com.android.basics.features.todo.domain.interactor.user.RegisterUserInteractor;
 import com.android.basics.features.todo.domain.model.User;
 import com.android.basics.features.todo.presentation.components.UserSession;
@@ -32,15 +33,18 @@ public class RegisterUserPresenter implements RegisterUserContract.Presenter {
 
                 session.setUser(response);
 
-                view.dismissProgressDialog();
-
-                view.showRegistrationSuccess();
+                DoIfNotNull.let(view, view -> {
+                    view.dismissProgressDialog();
+                    view.showRegistrationSuccess();
+                });
             }
 
             @Override
             public void onError(String errorcode, String errorResponse) {
-                view.dismissProgressDialog();
-                view.showRegistrationError();
+                DoIfNotNull.let(view, view -> {
+                    view.dismissProgressDialog();
+                    view.showRegistrationError();
+                });
             }
         });
 
@@ -63,6 +67,7 @@ public class RegisterUserPresenter implements RegisterUserContract.Presenter {
 
     @Override
     public void detach() {
+        registerUserInteractor.dispose();
         this.view = null;
     }
 }

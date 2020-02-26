@@ -41,9 +41,6 @@ public class TodoNavigator implements SplashContract.Navigator,
 
     @Override
     public void goToLoginScreen() {
-
-
-
         Intent intent = navigator.createIntent(LoginActivity.class);
         navigator.launchActivity(intent);
         navigator.finishActivity();

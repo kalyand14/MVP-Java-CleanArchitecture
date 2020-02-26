@@ -1,6 +1,7 @@
 package com.android.basics.features.todo.presentation.login;
 
 import com.android.basics.core.domain.Callback;
+import com.android.basics.core.utils.DoIfNotNull;
 import com.android.basics.features.todo.domain.interactor.user.AuthenticateUserInteractor;
 import com.android.basics.features.todo.domain.model.User;
 import com.android.basics.features.todo.presentation.components.UserSession;
@@ -28,21 +29,22 @@ public class LoginPresenter implements LoginContract.Presenter {
         authenticateUserInteractor.execute(AuthenticateUserInteractor.Params.forUser(userName, password), new Callback<User>() {
             @Override
             public void onResponse(User response) {
-
-                session.setUser(response);
-
-                view.dismissProgressDialog();
-                if (response.getUserId() != 0) {
+                DoIfNotNull.let(view, LoginContract.View::dismissProgressDialog);
+                if (response != null) {
+                    session.setUser(response);
                     navigator.goToHomeScreen();
                 } else {
-                    view.showAuthenticationError();
+                    DoIfNotNull.let(view, LoginContract.View::showAuthenticationError);
                 }
             }
 
             @Override
             public void onError(String errorcode, String errorResponse) {
-                view.dismissProgressDialog();
-                view.showAuthenticationError();
+                DoIfNotNull.let(view, view -> {
+                    view.dismissProgressDialog();
+                    view.showAuthenticationError();
+                });
+
             }
         });
 
@@ -60,6 +62,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void detach() {
+        authenticateUserInteractor.dispose();
         this.view = null;
     }
 }
