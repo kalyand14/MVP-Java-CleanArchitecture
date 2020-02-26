@@ -25,6 +25,8 @@ public class TestUtil {
 
     public static final int USER_ID = 1;
     public static final int TODO_ID = 1;
+    public static final int TODO_ID_2 = 2;
+
     public static final long TODO_ID_LONG = 1;
     public static final long TODO_ID_LONG_NULL = -1;
     public static final String NAME = "name";

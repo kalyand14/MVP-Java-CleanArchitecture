@@ -6,7 +6,7 @@ import androidx.test.core.app.ApplicationProvider;
 import com.android.basics.data.source.dao.TodoDao;
 import com.android.basics.data.source.dao.UserDao;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 public class TodoDatabaseTest {
@@ -21,8 +21,8 @@ public class TodoDatabaseTest {
                 .build();
     }
 
-    @After
-    public void closeDb() throws Exception {
+    @AfterClass
+    public static void closeDb() throws Exception {
         database.close();
     }
 

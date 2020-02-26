@@ -53,11 +53,11 @@ public class TodoDaoTest extends TodoDatabaseTest {
         getTodoDao().insert(TestUtil.USER_ID, TestUtil.NAME, TestUtil.DESCRIPTION, TestUtil.DATE, false);
 
         //read
-        TodoTbl todoTbl = getTodoDao().getTodo(TestUtil.TODO_ID);
+        TodoTbl todoTbl = getTodoDao().getTodo(TestUtil.TODO_ID_2);
 
         assertNotNull(todoTbl);
 
-        Assert.assertEquals(TestUtil.TODO_ID, todoTbl.getTodoId());
+        Assert.assertEquals(TestUtil.TODO_ID_2, todoTbl.getTodoId());
         Assert.assertEquals(TestUtil.NAME, todoTbl.getName());
         Assert.assertEquals(TestUtil.DESCRIPTION, todoTbl.getDescription());
         Assert.assertEquals(TestUtil.DATE, todoTbl.getDueDate());
@@ -69,16 +69,16 @@ public class TodoDaoTest extends TodoDatabaseTest {
         getTodoDao().update(todoTbl);
 
         //read
-        todoTbl = getTodoDao().getTodo(TestUtil.TODO_ID);
+        todoTbl = getTodoDao().getTodo(TestUtil.TODO_ID_2);
         Assert.assertEquals(TEST_TITLE, todoTbl.getName());
         Assert.assertEquals(TEST_CONTENT, todoTbl.getDescription());
         Assert.assertEquals(TEST_TIMESTAMP, todoTbl.getDueDate());
 
         // delete
-        getTodoDao().delete(TestUtil.TODO_ID);
+        getTodoDao().delete(TestUtil.TODO_ID_2);
 
         // confirm the database is empty
-        todoTbl = getTodoDao().getTodo(TestUtil.TODO_ID);
+        todoTbl = getTodoDao().getTodo(TestUtil.TODO_ID_2);
         Assert.assertNull(todoTbl);
     }
 
