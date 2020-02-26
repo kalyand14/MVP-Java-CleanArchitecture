@@ -1,25 +1,17 @@
 package com.android.basics.data.source;
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 
+import com.android.basics.data.source.dao.TodoDao;
 import com.android.basics.data.source.dao.UserDao;
 
 import org.junit.After;
 import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static org.junit.Assert.assertNull;
 
 public class TodoDatabaseTest {
 
-    @Rule
-    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
-
     private static TodoDatabase database;
-    private UserDao userDao;
 
     @BeforeClass
     public static void initDb() throws Exception {
@@ -34,10 +26,11 @@ public class TodoDatabaseTest {
         database.close();
     }
 
-    @Test
-    public void testUserDao() {
-        userDao = database.userDao();
-        assertNull(userDao.getUser("kalyan", "password"));
+    public UserDao getUserDao() {
+        return database.userDao();
     }
 
+    public TodoDao getTodoDao() {
+        return database.todoDao();
+    }
 }

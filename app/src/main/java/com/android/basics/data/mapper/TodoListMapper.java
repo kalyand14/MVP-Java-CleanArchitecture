@@ -24,6 +24,6 @@ public class TodoListMapper implements Mapper<List<TodoTbl>, List<Todo>> {
     }
 
     private Todo getTodo(TodoTbl tbl) {
-        return new Todo(tbl.getTodoId(), tbl.getUserId(), tbl.getName(), tbl.getDescription(), tbl.getDueDate(), tbl.getCompleted());
+        return new Todo(tbl.getTodoId(), tbl.getUserId(), tbl.getName(), tbl.getDescription(), tbl.getDueDate(), tbl.isCompleted());
     }
 }

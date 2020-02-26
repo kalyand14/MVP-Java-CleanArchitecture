@@ -25,4 +25,11 @@ public class TodoListMapperTest {
         List<Todo> todoList = todoListMapper.convert(todoTblList);
         Assert.assertEquals(todoList.size(), todoTblList.size());
     }
+
+    @Test
+    public void test_convert_error() {
+        List<Todo> todoList = todoListMapper.convert(null);
+        Assert.assertNull(todoList);
+
+    }
 }

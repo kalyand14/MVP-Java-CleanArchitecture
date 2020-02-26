@@ -10,7 +10,7 @@ public class TodoMapper implements Mapper<TodoTbl, Todo> {
         if (fromObj == null) {
             return null;
         } else {
-            return new Todo(fromObj.getTodoId(), fromObj.getUserId(), fromObj.getName(), fromObj.getDescription(), fromObj.getDueDate(), fromObj.getCompleted());
+            return new Todo(fromObj.getTodoId(), fromObj.getUserId(), fromObj.getName(), fromObj.getDescription(), fromObj.getDueDate(), fromObj.isCompleted());
         }
     }
 
