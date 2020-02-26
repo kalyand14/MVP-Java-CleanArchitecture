@@ -4,22 +4,22 @@ import android.app.Application;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.basics.core.navigation.BundleFactory;
-import com.android.basics.core.navigation.IntentFactory;
-import com.android.basics.core.navigation.NativeBundleFactory;
-import com.android.basics.core.navigation.NativeIntentFactory;
-import com.android.basics.core.navigation.Navigator;
-import com.android.basics.data.component.DaoExecutor;
-import com.android.basics.data.mapper.TodoListMapper;
-import com.android.basics.data.mapper.TodoMapper;
-import com.android.basics.data.mapper.UserMapper;
-import com.android.basics.data.repository.TodoDataRepository;
-import com.android.basics.data.repository.UserDataRepository;
-import com.android.basics.data.source.TodoDatabase;
-import com.android.basics.data.source.dao.TodoDao;
-import com.android.basics.data.source.dao.UserDao;
-import com.android.basics.domain.repository.TodoRepository;
-import com.android.basics.domain.repository.UserRepository;
+import com.android.basics.core.presenetation.navigation.BundleFactory;
+import com.android.basics.core.presenetation.navigation.IntentFactory;
+import com.android.basics.core.presenetation.navigation.NativeBundleFactory;
+import com.android.basics.core.presenetation.navigation.NativeIntentFactory;
+import com.android.basics.core.presenetation.navigation.Navigator;
+import com.android.basics.features.todo.data.component.DaoExecutor;
+import com.android.basics.features.todo.data.mapper.TodoListMapper;
+import com.android.basics.features.todo.data.mapper.TodoMapper;
+import com.android.basics.features.todo.data.mapper.UserMapper;
+import com.android.basics.features.todo.data.repository.TodoDataRepository;
+import com.android.basics.features.todo.data.repository.UserDataRepository;
+import com.android.basics.features.todo.data.source.TodoDatabase;
+import com.android.basics.features.todo.data.source.dao.TodoDao;
+import com.android.basics.features.todo.data.source.dao.UserDao;
+import com.android.basics.features.todo.domain.repository.TodoRepository;
+import com.android.basics.features.todo.domain.repository.UserRepository;
 
 public class ApplicationModule {
 

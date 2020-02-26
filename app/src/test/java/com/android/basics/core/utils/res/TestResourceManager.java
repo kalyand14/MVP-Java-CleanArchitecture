@@ -6,7 +6,7 @@ import android.util.DisplayMetrics;
 import androidx.annotation.IdRes;
 import androidx.annotation.PluralsRes;
 
-import com.android.basics.core.utils.ResourceManager;
+import com.android.basics.core.presenetation.resource.ResourceManager;
 
 import java.util.HashMap;
 import java.util.Map;

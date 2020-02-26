@@ -1,9 +1,9 @@
 package com.android.basics;
 
-import com.android.basics.data.source.entity.TodoTbl;
-import com.android.basics.data.source.entity.UserTbl;
-import com.android.basics.domain.model.Todo;
-import com.android.basics.domain.model.User;
+import com.android.basics.features.todo.data.source.entity.TodoTbl;
+import com.android.basics.features.todo.data.source.entity.UserTbl;
+import com.android.basics.features.todo.domain.model.Todo;
+import com.android.basics.features.todo.domain.model.User;
 
 import org.mockito.Mockito;
 

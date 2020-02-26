@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".presentation.splash.SplashActivity"
+            android:name=".features.todo.presentation.splash.SplashActivity"
             android:theme="@style/SplahAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,14 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.home.HomeActivity" />
+        <activity android:name=".features.todo.presentation.home.HomeActivity" />
         <activity
-            android:name=".presentation.login.LoginActivity"
+            android:name=".features.todo.presentation.login.LoginActivity"
             android:theme="@style/SplahAppTheme" />
-        <activity android:name=".presentation.registration.RegisterUserActivity"
+        <activity android:name=".features.todo.presentation.registration.RegisterUserActivity"
             android:theme="@style/SplahAppTheme"/>
-        <activity android:name=".presentation.todo.edit.EditTodoActivity" />
-        <activity android:name=".presentation.todo.add.AddTodoActivity" />
+        <activity android:name=".features.todo.presentation.todo.edit.EditTodoActivity" />
+        <activity android:name=".features.todo.presentation.todo.add.AddTodoActivity" />
     </application>
 
 </manifest>

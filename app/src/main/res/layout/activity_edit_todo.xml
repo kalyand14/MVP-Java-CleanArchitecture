@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".presentation.login.LoginActivity">
+    tools:context=".features.todo.presentation.login.LoginActivity">
 
     <TextView
         android:id="@+id/txt_login_msg"

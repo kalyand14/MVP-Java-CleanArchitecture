@@ -3,11 +3,11 @@ package com.android.basics.di;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.basics.core.di.InstanceContainer;
-import com.android.basics.core.navigation.BundleFactory;
-import com.android.basics.core.navigation.IntentFactory;
-import com.android.basics.core.navigation.Navigator;
-import com.android.basics.domain.repository.TodoRepository;
-import com.android.basics.domain.repository.UserRepository;
+import com.android.basics.core.presenetation.navigation.BundleFactory;
+import com.android.basics.core.presenetation.navigation.IntentFactory;
+import com.android.basics.core.presenetation.navigation.Navigator;
+import com.android.basics.features.todo.domain.repository.TodoRepository;
+import com.android.basics.features.todo.domain.repository.UserRepository;
 
 public class ApplicationScope {
 
