@@ -1,11 +1,13 @@
 package com.android.basics.features.todo.di;
 
+import androidx.annotation.VisibleForTesting;
+
 import com.android.basics.core.di.BaseScope;
 import com.android.basics.core.di.InstanceContainer;
 import com.android.basics.di.ApplicationScope;
 
 public class UserScope implements BaseScope {
-    private final InstanceContainer container = new InstanceContainer();
+    private InstanceContainer container = new InstanceContainer();
 
     private UserScope() {
     }
@@ -26,5 +28,9 @@ public class UserScope implements BaseScope {
         return container;
     }
 
+    @VisibleForTesting
+    public void setContainer(InstanceContainer container) {
+        this.container = container;
+    }
 
 }

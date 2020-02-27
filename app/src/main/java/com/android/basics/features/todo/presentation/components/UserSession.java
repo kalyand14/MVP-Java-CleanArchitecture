@@ -39,5 +39,6 @@ public class UserSession implements ScopeObserver {
     @Override
     public void onScopeEnded() {
         user = null;
+        todoList = null;
     }
 }

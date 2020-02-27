@@ -1,5 +1,6 @@
 package com.android.basics.di;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.basics.core.di.InstanceContainer;
@@ -11,7 +12,7 @@ import com.android.basics.features.todo.domain.repository.UserRepository;
 
 public class ApplicationScope {
 
-    private final InstanceContainer container = new InstanceContainer();
+    private InstanceContainer container = new InstanceContainer();
     private static ApplicationScope instance = null;
 
 
@@ -64,9 +65,14 @@ public class ApplicationScope {
     }
 
 
-
     public InstanceContainer getContainer() {
         return container;
     }
+
+    @VisibleForTesting
+    public void setContainer(InstanceContainer container) {
+        this.container = container;
+    }
+
 
 }
