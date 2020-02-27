@@ -1,26 +1,17 @@
 package com.android.basics.features.todo.presentation.splash;
 
-import com.android.basics.core.TodoApplication;
 import com.android.basics.di.ApplicationScope;
 import com.android.basics.features.todo.presentation.TodoNavigator;
 
 public class SplashInjector {
 
     private ApplicationScope applicationScope;
-    private static SplashInjector instance = null;
 
-    private SplashInjector() {
-    }
-
-    public static SplashInjector getInstance() {
-        if (instance == null) {
-            instance = new SplashInjector();
-        }
-        return instance;
+    public SplashInjector(ApplicationScope applicationScope) {
+        this.applicationScope = applicationScope;
     }
 
     public void inject(SplashActivity activity) {
-        applicationScope = ((TodoApplication) activity.getApplication()).getApplicationScope();
         injectObject(activity);
     }
 
@@ -32,8 +23,5 @@ public class SplashInjector {
         return new TodoNavigator(applicationScope.navigator(activity));
     }
 
-    public void destroy() {
-        instance = null;
-    }
 
 }

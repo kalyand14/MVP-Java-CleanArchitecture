@@ -6,6 +6,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.basics.R;
+import com.android.basics.core.TodoApplication;
 
 public class SplashActivity extends AppCompatActivity implements SplashContract.View {
 
@@ -16,7 +17,7 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        SplashInjector.getInstance().inject(this);
+        new SplashInjector(((TodoApplication) getApplication()).getApplicationScope()).inject(this);
 
         this.presenter.attach(this);
 
@@ -26,7 +27,6 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SplashInjector.getInstance().destroy();
         this.presenter.detach();
     }
 }
