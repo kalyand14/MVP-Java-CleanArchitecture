@@ -28,7 +28,7 @@ public interface EditTodoContract {
 
         void onSubmit(String name, String desc, String date);
 
-        void navigate();
+        void navigateToViewTodoList();
 
         void OnCancel();
 

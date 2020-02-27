@@ -22,6 +22,7 @@ public class AddTodoPresenter implements AddTodoContract.Presenter {
 
     @Override
     public void onSubmit(String name, String desc, String date) {
+        view.showProgressDialog();
         addTodoInteractor.execute(AddTodoInteractor.Params.forTodo(session.getUser().getUserId(), name, desc, date), new Callback<Boolean>() {
             @Override
             public void onResponse(Boolean response) {
@@ -42,7 +43,7 @@ public class AddTodoPresenter implements AddTodoContract.Presenter {
     }
 
     @Override
-    public void navigate() {
+    public void navigateToViewTodoList() {
         navigator.goToHomeScreen();
     }
 
@@ -63,6 +64,7 @@ public class AddTodoPresenter implements AddTodoContract.Presenter {
 
     @Override
     public void detach() {
+        addTodoInteractor.dispose();
         view = null;
     }
 }

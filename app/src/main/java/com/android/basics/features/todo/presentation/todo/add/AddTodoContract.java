@@ -18,7 +18,7 @@ public interface AddTodoContract {
     interface Presenter extends BasePresenter<AddTodoContract.View> {
         void onSubmit(String name, String desc, String date);
 
-        void navigate();
+        void navigateToViewTodoList();
 
         void OnCancel();
 

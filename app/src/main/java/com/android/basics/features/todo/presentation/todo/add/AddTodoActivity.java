@@ -104,7 +104,7 @@ public class AddTodoActivity extends AppCompatActivity implements AddTodoContrac
                 .setCancelable(false)
                 .setPositiveButton("Ok", (dialog, id) -> {
                     dialog.dismiss();
-                    presenter.navigate();
+                    presenter.navigateToViewTodoList();
                 });
         //Creating dialog box
         AlertDialog alert = builder.create();

@@ -102,7 +102,7 @@ public class EditTodoActivity extends AppCompatActivity implements EditTodoContr
                 .setCancelable(false)
                 .setPositiveButton("Ok", (dialog, id) -> {
                     dialog.dismiss();
-                    presenter.navigate();
+                    presenter.navigateToViewTodoList();
                 });
         //Creating dialog box
         AlertDialog alert = builder.create();

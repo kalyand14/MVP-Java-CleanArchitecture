@@ -27,7 +27,7 @@ public class EditTodoPresenter implements EditTodoContract.Presenter {
 
     @Override
     public void loadTodo() {
-        Todo todo = TodoSession.getInstance().getTodo();
+        Todo todo = session.getTodo();
         view.setName(todo.getName());
         view.setDescription(todo.getDescription());
         view.setDate(todo.getDueDate());
@@ -50,13 +50,13 @@ public class EditTodoPresenter implements EditTodoContract.Presenter {
             @Override
             public void onError(String errorcode, String errorResponse) {
                 view.dismissProgressDialog();
-                view.showErrorDialog("There was a problem. could not able to delete the record.");
+                view.showErrorDialog("There was a problem. could not able to update the record.");
             }
         });
     }
 
     @Override
-    public void navigate() {
+    public void navigateToViewTodoList() {
         navigator.goToHomeScreen();
     }
 
@@ -99,6 +99,8 @@ public class EditTodoPresenter implements EditTodoContract.Presenter {
 
     @Override
     public void detach() {
+        editTodoInteractor.dispose();
+        deleteTodoInteractor.dispose();
         this.view = null;
     }
 }
