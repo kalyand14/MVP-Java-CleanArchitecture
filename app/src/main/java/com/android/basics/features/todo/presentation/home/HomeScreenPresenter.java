@@ -1,12 +1,12 @@
 package com.android.basics.features.todo.presentation.home;
 
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Error;
+import com.android.basics.core.UseCase;
+import com.android.basics.core.UseCaseHandler;
+import com.android.basics.core.utils.DoIfNotNull;
 import com.android.basics.features.todo.di.UserScope;
 import com.android.basics.features.todo.domain.interactor.todo.GetTodoListInteractor;
-import com.android.basics.features.todo.domain.model.Todo;
 import com.android.basics.features.todo.presentation.components.UserSession;
-
-import java.util.List;
 
 public class HomeScreenPresenter implements HomeScreenContract.Presenter {
 
@@ -20,42 +20,51 @@ public class HomeScreenPresenter implements HomeScreenContract.Presenter {
 
     private UserScope userScope;
 
+    private final UseCaseHandler useCaseHandler;
+
     public HomeScreenPresenter(GetTodoListInteractor getTodoListInteractor,
                                UserSession session,
                                UserScope userScope,
-                               HomeScreenContract.Navigator navigator) {
+                               HomeScreenContract.Navigator navigator,
+                               UseCaseHandler useCaseHandler) {
         this.getTodoListInteractor = getTodoListInteractor;
         this.navigator = navigator;
         this.session = session;
         this.userScope = userScope;
+        this.useCaseHandler = useCaseHandler;
     }
 
     @Override
-    public void onLoadTodoList(int userId) {
+    public void onLoadTodoList(String userId) {
 
         view.setWelcomeMessage("Welcome " + session.getUser().getUserName());
 
         view.showProgressDialog();
-        getTodoListInteractor.execute(GetTodoListInteractor.Params.forUser(userId), new Callback<List<Todo>>() {
-            @Override
-            public void onResponse(List<Todo> response) {
 
-                if (response != null && response.size() > 0) {
-                    session.setTodoList(response);
-                    view.showList(true);
-                    view.showErrorLayout(false);
-                    view.loadTodoList(response);
-                    view.dismissProgressDialog();
-                } else {
-                    showError();
-                }
+        useCaseHandler.execute(getTodoListInteractor, new GetTodoListInteractor.Request(userId), new UseCase.UseCaseCallback<GetTodoListInteractor.Response>() {
+            @Override
+            public void onSuccess(GetTodoListInteractor.Response response) {
+                DoIfNotNull.let(view, view -> {
+                    if (response.isValid()) {
+                        session.setTodoList(response.getTodoList());
+                        view.showList(true);
+                        view.showErrorLayout(false);
+                        view.loadTodoList(response.getTodoList());
+                        view.dismissProgressDialog();
+                    } else {
+                        showError();
+                    }
+                });
             }
 
             @Override
-            public void onError(String errorcode, String errorResponse) {
-                showError();
+            public void onError(Error error) {
+                DoIfNotNull.let(view, view -> {
+                    showError();
+                });
             }
         });
+
     }
 
     private void showError() {

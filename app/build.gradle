@@ -19,13 +19,39 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    android {
+        sourceSets {
+            String sharedTestDir = 'src/sharedTest/java'
+            test {
+                java.srcDir sharedTestDir
+            }
+            androidTest {
+                java.srcDir sharedTestDir
+            }
+        }
+    }
+
     buildTypes {
         debug {
+            minifyEnabled false
             testCoverageEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        mock {
+            dimension "default"
+            applicationIdSuffix = ".mock"
+        }
+        prod {
+            dimension "default"
         }
     }
 
@@ -34,8 +60,28 @@ android {
         targetCompatibility = 1.8
     }
 
+    // Remove mockRelease as it's not needed.
+    android.variantFilter { variant ->
+        if (variant.buildType.name == 'release'
+                && variant.getFlavors().get(0).name == 'mock') {
+            variant.setIgnore(true)
+        }
+    }
+
     lintOptions {
         abortOnError false
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+
+            all {
+                testLogging {
+                    events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+                }
+            }
+        }
     }
 }
 
@@ -51,11 +97,20 @@ dependencies {
     implementation deps.recyclerview
     implementation deps.lifecycle.runtime
 
+
+
     // Annotation processor
     annotationProcessor deps.lifecycle.compiler
 
     testImplementation deps.junit
     testImplementation deps.mockito.core
+    testImplementation deps.robolectric
+    testImplementation deps.atsl.core
+    testImplementation deps.atsl.runner
+    testImplementation deps.atsl.ext_junit
+    testImplementation deps.espresso.core
+    testImplementation deps.espresso.intents
+    testImplementation deps.truth
 
     androidTestImplementation deps.atsl.ext_junit
     androidTestImplementation deps.atsl.runner
@@ -63,6 +118,8 @@ dependencies {
     androidTestImplementation deps.espresso.core
     androidTestImplementation deps.arch_core.testing
     androidTestImplementation deps.room.testing
+    androidTestImplementation deps.espresso.idling_concurrent
+    implementation deps.espresso.idling_resource
 
     // Room components
     implementation deps.room.runtime

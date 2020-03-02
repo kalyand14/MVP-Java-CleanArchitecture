@@ -1,7 +1,7 @@
 package com.android.basics.features.todo.presentation.todo.add;
 
 import com.android.basics.TestUtil;
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Callback;
 import com.android.basics.features.todo.domain.interactor.todo.AddTodoInteractor;
 import com.android.basics.features.todo.domain.model.User;
 import com.android.basics.features.todo.presentation.components.UserSession;
@@ -76,7 +76,7 @@ public class AddTodoPresenterTest {
 
         //Assert
         verify(view).showProgressDialog();
-        verify(addTodoInteractor).execute(any(AddTodoInteractor.Params.class), addTodoCallbackCaptor.capture());
+        verify(addTodoInteractor).execute(any(AddTodoInteractor.Request.class), addTodoCallbackCaptor.capture());
     }
 
     @Test

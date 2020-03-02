@@ -1,13 +1,14 @@
 package com.android.basics.features.todo.domain.interactor.todo;
 
-import com.android.basics.core.domain.Callback;
-import com.android.basics.core.domain.UseCase;
+import com.android.basics.core.Callback;
+import com.android.basics.core.Error;
+import com.android.basics.core.UseCase;
 import com.android.basics.features.todo.domain.model.Todo;
 import com.android.basics.features.todo.domain.repository.TodoRepository;
 
 import java.util.List;
 
-public class GetTodoListInteractor extends UseCase<GetTodoListInteractor.Params, List<Todo>> {
+public class GetTodoListInteractor extends UseCase<GetTodoListInteractor.Request, GetTodoListInteractor.Response> {
 
     private TodoRepository todoRepository;
 
@@ -16,34 +17,51 @@ public class GetTodoListInteractor extends UseCase<GetTodoListInteractor.Params,
     }
 
     @Override
-    protected void executeTask(Params params, final Callback<List<Todo>> callback) {
-        todoRepository.getTodoList(params.userId, new Callback<List<Todo>>() {
+    protected void executeUseCase(Request request) {
+        todoRepository.getTodoList(request.getUserId(), new Callback<List<Todo>>() {
             @Override
             public void onResponse(List<Todo> response) {
-                if (!isDisposed()) {
-                    callback.onResponse(response);
+                if (isNotDisposed()) {
+                    getUseCaseCallback().onSuccess(new Response(response));
                 }
             }
 
             @Override
-            public void onError(String errorcode, String errorResponse) {
-                if (!isDisposed()) {
-                    callback.onError(errorcode, errorResponse);
+            public void onError(Error todoError) {
+                if (isNotDisposed()) {
+                    getUseCaseCallback().onError(todoError);
                 }
             }
         });
     }
 
-    public static class Params {
+    public static final class Request implements UseCase.Request {
 
-        private final int userId;
+        private final String userId;
 
-        private Params(int userId) {
+        public Request(String userId) {
             this.userId = userId;
         }
 
-        public static Params forUser(int userId) {
-            return new Params(userId);
+        public String getUserId() {
+            return userId;
+        }
+    }
+
+    public static final class Response implements UseCase.Response {
+
+        private final List<Todo> todoList;
+
+        public Response(List<Todo> todoList) {
+            this.todoList = todoList;
+        }
+
+        public List<Todo> getTodoList() {
+            return todoList;
+        }
+
+        public boolean isValid() {
+            return todoList != null && todoList.size() > 1;
         }
     }
 }

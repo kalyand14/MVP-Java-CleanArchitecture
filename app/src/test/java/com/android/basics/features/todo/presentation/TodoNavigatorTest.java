@@ -2,7 +2,7 @@ package com.android.basics.features.todo.presentation;
 
 import android.content.Intent;
 
-import com.android.basics.core.presenetation.navigation.Navigator;
+import com.android.basics.core.navigation.Navigator;
 import com.android.basics.features.todo.presentation.home.HomeActivity;
 import com.android.basics.features.todo.presentation.login.LoginActivity;
 import com.android.basics.features.todo.presentation.registration.RegisterUserActivity;

@@ -4,25 +4,30 @@ import android.app.Application;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.basics.core.presenetation.navigation.BundleFactory;
-import com.android.basics.core.presenetation.navigation.IntentFactory;
-import com.android.basics.core.presenetation.navigation.NativeBundleFactory;
-import com.android.basics.core.presenetation.navigation.NativeIntentFactory;
-import com.android.basics.core.presenetation.navigation.Navigator;
-import com.android.basics.features.todo.data.component.DaoExecutor;
-import com.android.basics.features.todo.data.mapper.TodoListMapper;
-import com.android.basics.features.todo.data.mapper.TodoMapper;
-import com.android.basics.features.todo.data.mapper.UserMapper;
+import com.android.basics.core.navigation.BundleFactory;
+import com.android.basics.core.navigation.IntentFactory;
+import com.android.basics.core.navigation.NativeBundleFactory;
+import com.android.basics.core.navigation.NativeIntentFactory;
+import com.android.basics.core.navigation.Navigator;
+import com.android.basics.core.utils.AppExecutors;
 import com.android.basics.features.todo.data.repository.TodoDataRepository;
 import com.android.basics.features.todo.data.repository.UserDataRepository;
-import com.android.basics.features.todo.data.source.TodoDatabase;
-import com.android.basics.features.todo.data.source.dao.TodoDao;
-import com.android.basics.features.todo.data.source.dao.UserDao;
+import com.android.basics.features.todo.data.source.TodoDataSource;
+import com.android.basics.features.todo.data.source.UserDataSource;
+import com.android.basics.features.todo.data.source.local.TodoDatabase;
+import com.android.basics.features.todo.data.source.local.TodoLocalDataSource;
+import com.android.basics.features.todo.data.source.local.UserLocalDataSource;
+import com.android.basics.features.todo.data.source.local.dao.TodoDao;
+import com.android.basics.features.todo.data.source.local.dao.UserDao;
+import com.android.basics.features.todo.data.source.local.mapper.TodoListMapper;
+import com.android.basics.features.todo.data.source.local.mapper.TodoMapper;
+import com.android.basics.features.todo.data.source.local.mapper.UserMapper;
+import com.android.basics.features.todo.data.source.remote.TodoRemoteDataSource;
+import com.android.basics.features.todo.data.source.remote.UserRemoteLocalSource;
 import com.android.basics.features.todo.domain.repository.TodoRepository;
 import com.android.basics.features.todo.domain.repository.UserRepository;
 
 public class ApplicationModule {
-
 
     private Application application;
 
@@ -42,16 +47,33 @@ public class ApplicationModule {
         return new Navigator(activity, intentFactory, bundleFactory);
     }
 
-    public UserRepository provideUserRepository(DaoExecutor daoExecutor, UserDao userDao, UserMapper userMapper) {
-        return new UserDataRepository(daoExecutor, userDao, userMapper);
+    public UserRepository provideUserRepository(UserDataSource localDataSource, UserDataSource remoteDataSource) {
+        return UserDataRepository.getInstance(localDataSource, remoteDataSource);
     }
 
-    public TodoRepository provideTodoRepository(DaoExecutor daoExecutor, TodoDao userDao, TodoListMapper todoListMapper, TodoMapper todoMapper) {
-        return new TodoDataRepository(daoExecutor, userDao, todoListMapper, todoMapper);
+    public TodoRepository provideTodoRepository(TodoDataSource localDataSource, TodoDataSource remoteDataSource) {
+        return TodoDataRepository.getInstance(localDataSource, remoteDataSource);
     }
 
-    public DaoExecutor provideDaoExecutor() {
-        return new DaoExecutor();
+    public UserDataSource provideUserLocalDataSource() {
+        return new UserLocalDataSource(provideUserDao(provideTodoDatabase(application)), provideAppExecutors(), provideUserMapper());
+    }
+
+    public UserDataSource provideUserRemoteDataSource() {
+        return new UserRemoteLocalSource();
+    }
+
+    public TodoDataSource provideTodoLocalDataSource() {
+
+        return new TodoLocalDataSource(provideTodoDao(provideTodoDatabase(application)), provideAppExecutors(), provideTodoListMapper(), provideTodoMapper());
+    }
+
+    public TodoDataSource provideTodoRemoteDataSource() {
+        return new TodoRemoteDataSource();
+    }
+
+    public AppExecutors provideAppExecutors() {
+        return new AppExecutors();
     }
 
     public TodoDatabase provideTodoDatabase(Application application) {
@@ -62,7 +84,7 @@ public class ApplicationModule {
         return database.userDao();
     }
 
-    public TodoDao  provideTodoDao(TodoDatabase database) {
+    public TodoDao provideTodoDao(TodoDatabase database) {
         return database.todoDao();
     }
 

@@ -1,7 +1,7 @@
 package com.android.basics.features.todo.presentation.registration;
 
 import com.android.basics.TestUtil;
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Callback;
 import com.android.basics.features.todo.domain.interactor.user.RegisterUserInteractor;
 import com.android.basics.features.todo.domain.model.User;
 import com.android.basics.features.todo.presentation.components.UserSession;

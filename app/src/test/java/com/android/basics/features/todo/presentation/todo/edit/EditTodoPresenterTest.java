@@ -1,7 +1,7 @@
 package com.android.basics.features.todo.presentation.todo.edit;
 
 import com.android.basics.TestUtil;
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Callback;
 import com.android.basics.features.todo.domain.interactor.todo.DeleteTodoInteractor;
 import com.android.basics.features.todo.domain.interactor.todo.EditTodoInteractor;
 import com.android.basics.features.todo.domain.model.Todo;
@@ -133,7 +133,7 @@ public class EditTodoPresenterTest {
 
         //Assert
         verify(view).showProgressDialog("Updating todo");
-        verify(editTodoInteractor).execute(any(EditTodoInteractor.Params.class), addEditTodoCallbackCaptor.capture());
+        verify(editTodoInteractor).execute(any(EditTodoInteractor.Request.class), addEditTodoCallbackCaptor.capture());
     }
 
     @Test

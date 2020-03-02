@@ -3,6 +3,7 @@ package com.android.basics.features.todo.presentation.registration;
 import android.app.ProgressDialog;
 
 import com.android.basics.core.TodoApplication;
+import com.android.basics.core.UseCaseHandler;
 import com.android.basics.di.ApplicationScope;
 import com.android.basics.features.todo.domain.interactor.user.RegisterUserInteractor;
 import com.android.basics.features.todo.presentation.TodoNavigator;
@@ -36,7 +37,7 @@ public class RegisterUserInjector {
     }
 
     private void injectObject(RegisterUserActivity activity) {
-        activity.presenter = new RegisterUserPresenter(provideNavigator(activity), provideRegisterUser(), UserSession.getInstance());
+        activity.presenter = new RegisterUserPresenter(provideNavigator(activity), provideRegisterUser(), UserSession.getInstance(),  UseCaseHandler.getInstance());
     }
 
     private RegisterUserContract.Navigator provideNavigator(RegisterUserActivity activity) {

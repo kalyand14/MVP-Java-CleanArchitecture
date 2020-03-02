@@ -4,9 +4,9 @@ import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.basics.core.di.InstanceContainer;
-import com.android.basics.core.presenetation.navigation.BundleFactory;
-import com.android.basics.core.presenetation.navigation.IntentFactory;
-import com.android.basics.core.presenetation.navigation.Navigator;
+import com.android.basics.core.navigation.BundleFactory;
+import com.android.basics.core.navigation.IntentFactory;
+import  com.android.basics.core.navigation.Navigator;
 import com.android.basics.features.todo.domain.repository.TodoRepository;
 import com.android.basics.features.todo.domain.repository.UserRepository;
 
@@ -52,14 +52,14 @@ public class ApplicationScope {
 
     public UserRepository userRepository() {
         if (!container.has(UserRepository.class)) {
-            container.register(UserRepository.class, module.provideUserRepository(module.provideDaoExecutor(), module.provideUserDao(module.provideTodoDatabase(module.getApplication())), module.provideUserMapper()));
+            container.register(UserRepository.class, module.provideUserRepository(module.provideUserLocalDataSource(), module.provideUserRemoteDataSource()));
         }
         return container.get(UserRepository.class);
     }
 
     public TodoRepository todoRepository() {
         if (!container.has(TodoRepository.class)) {
-            container.register(TodoRepository.class, module.provideTodoRepository(module.provideDaoExecutor(), module.provideTodoDao(module.provideTodoDatabase(module.getApplication())), module.provideTodoListMapper(), module.provideTodoMapper()));
+            container.register(TodoRepository.class, module.provideTodoRepository(module.provideTodoLocalDataSource(), module.provideTodoRemoteDataSource()));
         }
         return container.get(TodoRepository.class);
     }

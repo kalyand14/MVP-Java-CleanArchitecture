@@ -1,11 +1,14 @@
 package com.android.basics.features.todo.domain.interactor.user;
 
-import com.android.basics.core.domain.Callback;
-import com.android.basics.core.domain.UseCase;
+import androidx.annotation.NonNull;
+
+import com.android.basics.core.Callback;
+import com.android.basics.core.Error;
+import com.android.basics.core.UseCase;
 import com.android.basics.features.todo.domain.model.User;
 import com.android.basics.features.todo.domain.repository.UserRepository;
 
-public class RegisterUserInteractor extends UseCase<RegisterUserInteractor.Params, User> {
+public class RegisterUserInteractor extends UseCase<RegisterUserInteractor.Request, RegisterUserInteractor.Response> {
 
     private UserRepository userRepository;
 
@@ -14,35 +17,57 @@ public class RegisterUserInteractor extends UseCase<RegisterUserInteractor.Param
     }
 
     @Override
-    protected void executeTask(Params param, final Callback<User> callback) {
-        this.userRepository.register(param.userName, param.password, new Callback<User>() {
+    protected void executeUseCase(Request params) {
+        this.userRepository.register(params.getUser(), new Callback<User>() {
             @Override
             public void onResponse(User response) {
-                if (!isDisposed()) {
-                    callback.onResponse(response);
+                if (isNotDisposed()) {
+                    getUseCaseCallback().onSuccess(new Response(response));
                 }
             }
 
             @Override
-            public void onError(String errorcode, String errorResponse) {
-                if (!isDisposed()) {
-                    callback.onError(errorcode, errorResponse);
+            public void onError(Error todoError) {
+                if (isNotDisposed()) {
+                    getUseCaseCallback().onError(todoError);
                 }
             }
         });
     }
 
-    public static class Params {
-        private String userName;
-        private String password;
+    public static final class Request implements UseCase.Request {
 
-        private Params(String userName, String password) {
+        private final String userName;
+        private final String password;
+
+        public Request(String userName, String password) {
             this.userName = userName;
             this.password = password;
         }
 
-        public static Params forUser(String userName, String password) {
-            return new Params(userName, password);
+        public String getUserName() {
+            return userName;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public User getUser() {
+            return new User(userName, password);
+        }
+    }
+
+    public static final class Response implements UseCase.Response {
+
+        private final User user;
+
+        public Response(@NonNull User user) {
+            this.user = user;
+        }
+
+        public User getUser() {
+            return user;
         }
     }
 }

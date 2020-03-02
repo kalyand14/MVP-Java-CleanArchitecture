@@ -1,7 +1,7 @@
 package com.android.basics.features.todo.presentation.login;
 
 import com.android.basics.TestUtil;
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Callback;
 import com.android.basics.features.todo.domain.interactor.user.AuthenticateUserInteractor;
 import com.android.basics.features.todo.domain.model.User;
 import com.android.basics.features.todo.presentation.components.UserSession;
@@ -55,7 +55,7 @@ public class LoginPresenterTest {
     public void test_OnLoginClick_success() {
         presenter.OnLoginClick(TestUtil.USER_NAME, TestUtil.PASSWORD);
         verify(view).showProgressDialog();
-        verify(authenticateUserInteractor).execute(any(AuthenticateUserInteractor.Params.class), userCallbackCaptor.capture());
+        verify(authenticateUserInteractor).execute(any(AuthenticateUserInteractor.Request.class), userCallbackCaptor.capture());
         userCallbackCaptor.getValue().onResponse(user);
         verify(view).dismissProgressDialog();
         verify(session).setUser(user);
@@ -66,7 +66,7 @@ public class LoginPresenterTest {
     public void test_OnLoginClick_failure() {
         presenter.OnLoginClick(TestUtil.USER_NAME, TestUtil.PASSWORD);
         verify(view).showProgressDialog();
-        verify(authenticateUserInteractor).execute(any(AuthenticateUserInteractor.Params.class), userCallbackCaptor.capture());
+        verify(authenticateUserInteractor).execute(any(AuthenticateUserInteractor.Request.class), userCallbackCaptor.capture());
         userCallbackCaptor.getValue().onResponse(null);
         verify(view).dismissProgressDialog();
         verify(view).showAuthenticationError();
@@ -76,7 +76,7 @@ public class LoginPresenterTest {
     public void test_OnLoginClick_error() {
         presenter.OnLoginClick(TestUtil.USER_NAME, TestUtil.PASSWORD);
         verify(view).showProgressDialog();
-        verify(authenticateUserInteractor).execute(any(AuthenticateUserInteractor.Params.class), userCallbackCaptor.capture());
+        verify(authenticateUserInteractor).execute(any(AuthenticateUserInteractor.Request.class), userCallbackCaptor.capture());
         userCallbackCaptor.getValue().onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
         verify(view).dismissProgressDialog();
         verify(view).showAuthenticationError();

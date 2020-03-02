@@ -1,6 +1,6 @@
 package com.android.basics.features.todo.presentation.login;
 
-import com.android.basics.core.presenetation.BasePresenter;
+import com.android.basics.core.BasePresenter;
 
 public interface LoginContract {
     interface View {

@@ -3,8 +3,9 @@ package com.android.basics.features.todo.data.source;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 
-import com.android.basics.features.todo.data.source.dao.TodoDao;
-import com.android.basics.features.todo.data.source.dao.UserDao;
+import com.android.basics.features.todo.data.source.local.TodoDatabase;
+import com.android.basics.features.todo.data.source.local.dao.TodoDao;
+import com.android.basics.features.todo.data.source.local.dao.UserDao;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

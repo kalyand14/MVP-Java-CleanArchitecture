@@ -1,7 +1,7 @@
 package com.android.basics.features.todo.domain.interactor.todo;
 
 import com.android.basics.TestUtil;
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Callback;
 import com.android.basics.features.todo.domain.repository.TodoRepository;
 
 import org.junit.Before;
@@ -25,7 +25,7 @@ public class AddTodoInteractorTest {
     private TodoRepository todoRepository;
 
     @Mock
-    private AddTodoInteractor.Params params;
+    private AddTodoInteractor.Request request;
 
     @InjectMocks
     private AddTodoInteractor interactor;
@@ -41,12 +41,12 @@ public class AddTodoInteractorTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        params = AddTodoInteractor.Params.forTodo(TestUtil.USER_ID, TestUtil.USER_NAME, TestUtil.DESCRIPTION, TestUtil.DATE);
+        request = AddTodoInteractor.Request.forTodo(TestUtil.USER_ID, TestUtil.USER_NAME, TestUtil.DESCRIPTION, TestUtil.DATE);
     }
 
     @Test
     public void testExecute_for_success() {
-        interactor.executeTask(params, todoCallback);
+        interactor.executeTask(request, todoCallback);
         verify(todoRepository).addTodo(
                 eq(TestUtil.USER_ID),
                 eq(TestUtil.USER_NAME),
@@ -61,7 +61,7 @@ public class AddTodoInteractorTest {
     @Test
     public void testExecute_for_success_diposed() {
         interactor.dispose();
-        interactor.executeTask(params, todoCallback);
+        interactor.executeTask(request, todoCallback);
         verify(todoRepository).addTodo(
                 eq(TestUtil.USER_ID),
                 eq(TestUtil.USER_NAME),
@@ -75,7 +75,7 @@ public class AddTodoInteractorTest {
 
     @Test
     public void testExecute_forfailure() {
-        interactor.executeTask(params, todoCallback);
+        interactor.executeTask(request, todoCallback);
         verify(todoRepository).addTodo(
                 eq(TestUtil.USER_ID),
                 eq(TestUtil.USER_NAME),
@@ -90,7 +90,7 @@ public class AddTodoInteractorTest {
     @Test
     public void testExecute_forfailure_disposed() {
         interactor.dispose();
-        interactor.executeTask(params, todoCallback);
+        interactor.executeTask(request, todoCallback);
         verify(todoRepository).addTodo(
                 eq(TestUtil.USER_ID),
                 eq(TestUtil.USER_NAME),

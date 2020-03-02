@@ -1,9 +1,10 @@
 package com.android.basics.features.todo.presentation.registration;
 
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Error;
+import com.android.basics.core.UseCase;
+import com.android.basics.core.UseCaseHandler;
 import com.android.basics.core.utils.DoIfNotNull;
 import com.android.basics.features.todo.domain.interactor.user.RegisterUserInteractor;
-import com.android.basics.features.todo.domain.model.User;
 import com.android.basics.features.todo.presentation.components.UserSession;
 
 public class RegisterUserPresenter implements RegisterUserContract.Presenter {
@@ -16,10 +17,13 @@ public class RegisterUserPresenter implements RegisterUserContract.Presenter {
 
     private UserSession session;
 
-    public RegisterUserPresenter(RegisterUserContract.Navigator navigator, RegisterUserInteractor registerUserInteractor, UserSession session) {
+    private final UseCaseHandler useCaseHandler;
+
+    public RegisterUserPresenter(RegisterUserContract.Navigator navigator, RegisterUserInteractor registerUserInteractor, UserSession session, UseCaseHandler useCaseHandler) {
         this.registerUserInteractor = registerUserInteractor;
         this.navigator = navigator;
         this.session = session;
+        this.useCaseHandler = useCaseHandler;
     }
 
     @Override
@@ -27,11 +31,10 @@ public class RegisterUserPresenter implements RegisterUserContract.Presenter {
 
         view.showProgressDialog();
 
-        registerUserInteractor.execute(RegisterUserInteractor.Params.forUser(userName, password), new Callback<User>() {
+        useCaseHandler.execute(registerUserInteractor, new RegisterUserInteractor.Request(userName, password), new UseCase.UseCaseCallback<RegisterUserInteractor.Response>() {
             @Override
-            public void onResponse(User response) {
-
-                session.setUser(response);
+            public void onSuccess(RegisterUserInteractor.Response response) {
+                session.setUser(response.getUser());
 
                 DoIfNotNull.let(view, view -> {
                     view.dismissProgressDialog();
@@ -40,14 +43,13 @@ public class RegisterUserPresenter implements RegisterUserContract.Presenter {
             }
 
             @Override
-            public void onError(String errorcode, String errorResponse) {
+            public void onError(Error error) {
                 DoIfNotNull.let(view, view -> {
                     view.dismissProgressDialog();
                     view.showRegistrationError();
                 });
             }
         });
-
     }
 
     @Override

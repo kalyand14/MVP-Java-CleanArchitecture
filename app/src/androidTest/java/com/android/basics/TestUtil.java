@@ -1,7 +1,7 @@
 package com.android.basics;
 
-import com.android.basics.features.todo.data.source.entity.TodoTbl;
-import com.android.basics.features.todo.data.source.entity.UserTbl;
+import com.android.basics.features.todo.data.source.local.entity.TodoTbl;
+import com.android.basics.features.todo.data.source.local.entity.UserTbl;
 import com.android.basics.features.todo.domain.model.Todo;
 import com.android.basics.features.todo.domain.model.User;
 

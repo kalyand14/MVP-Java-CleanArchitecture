@@ -22,7 +22,7 @@
 ext.deps = [:]
 def versions = [:]
 versions.activity = '1.1.0'
-versions.android_gradle_plugin = '3.6.0'
+versions.android_gradle_plugin = '3.6.1'
 versions.annotations = "1.0.0"
 versions.apache_commons = "2.5"
 versions.appcompat = "1.2.0-alpha02"
@@ -70,7 +70,7 @@ ext.versions = versions
 def build_versions = [:]
 build_versions.min_sdk = 14
 build_versions.compile_sdk = 29
-build_versions.target_sdk = 29
+build_versions.target_sdk = 28
 build_versions.build_tools = "29.0.3"
 ext.build_versions = build_versions
 
@@ -81,7 +81,6 @@ activity.activity_ktx = "androidx.activity:activity-ktx:$versions.activity"
 deps.activity = activity
 
 deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
-
 
 
 deps.annotations = "androidx.annotation:annotation:$versions.annotations"
@@ -128,6 +127,8 @@ def espresso = [:]
 espresso.core = "androidx.test.espresso:espresso-core:$versions.espresso"
 espresso.contrib = "androidx.test.espresso:espresso-contrib:$versions.espresso"
 espresso.intents = "androidx.test.espresso:espresso-intents:$versions.espresso"
+espresso.idling_concurrent = "androidx.test.espresso.idling:idling-concurrent:$versions.espresso"
+espresso.idling_resource = "androidx.test.espresso:espresso-idling-resource:$versions.espresso"
 deps.espresso = espresso
 
 def fragment = [:]
@@ -228,4 +229,5 @@ def addRepos(RepositoryHandler handler) {
     handler.jcenter()
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
+
 ext.addRepos = this.&addRepos

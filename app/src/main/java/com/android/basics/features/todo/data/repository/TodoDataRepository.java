@@ -1,12 +1,8 @@
 package com.android.basics.features.todo.data.repository;
 
-import com.android.basics.core.domain.Callback;
-import com.android.basics.features.todo.data.component.DaoCallback;
-import com.android.basics.features.todo.data.component.DaoExecutor;
-import com.android.basics.features.todo.data.mapper.TodoListMapper;
-import com.android.basics.features.todo.data.mapper.TodoMapper;
-import com.android.basics.features.todo.data.source.dao.TodoDao;
-import com.android.basics.features.todo.data.source.entity.TodoTbl;
+import com.android.basics.core.Callback;
+import com.android.basics.core.Error;
+import com.android.basics.features.todo.data.source.TodoDataSource;
 import com.android.basics.features.todo.domain.model.Todo;
 import com.android.basics.features.todo.domain.repository.TodoRepository;
 
@@ -14,123 +10,153 @@ import java.util.List;
 
 public class TodoDataRepository implements TodoRepository {
 
-    private TodoDao todoDao;
-    private DaoExecutor daoExecutor;
-    private TodoListMapper todoListMapper;
-    private TodoMapper todoMapper;
+    private static TodoDataRepository INSTANCE = null;
 
-    public TodoDataRepository(DaoExecutor daoExecutor, TodoDao todoDao, TodoListMapper todoListMapper, TodoMapper todoMapper) {
-        this.todoDao = todoDao;
-        this.daoExecutor = daoExecutor;
-        this.todoListMapper = todoListMapper;
-        this.todoMapper = todoMapper;
+    private final TodoDataSource todoLocalDataSource;
+    private final TodoDataSource todoRemoteDataSource;
+
+    private TodoDataRepository(TodoDataSource todoLocalDataSource, TodoDataSource todoRemoteDataSource) {
+        this.todoLocalDataSource = todoLocalDataSource;
+        this.todoRemoteDataSource = todoRemoteDataSource;
+    }
+
+    public static TodoDataRepository getInstance(TodoDataSource todoLocalDataSource, TodoDataSource todoRemoteDataSource) {
+        if (INSTANCE == null) {
+            INSTANCE = new TodoDataRepository(todoLocalDataSource, todoRemoteDataSource);
+        }
+        return INSTANCE;
+    }
+
+    public static void destroyInstance() {
+        INSTANCE = null;
+    }
+
+
+    @Override
+    public void getTodoList(String userId, Callback<List<Todo>> callback) {
+        todoLocalDataSource.getTodoList(userId, new Callback<List<Todo>>() {
+            @Override
+            public void onResponse(List<Todo> response) {
+                callback.onResponse(response);
+            }
+
+            @Override
+            public void onError(Error todoError) {
+                todoRemoteDataSource.getTodoList(userId, new Callback<List<Todo>>() {
+                    @Override
+                    public void onResponse(List<Todo> response) {
+                        callback.onResponse(response);
+                    }
+
+                    @Override
+                    public void onError(Error todoError) {
+                        callback.onError(todoError);
+                    }
+                });
+            }
+        });
     }
 
     @Override
-    public void getTodoList(int userId, Callback<List<Todo>> callback) {
-
-        DaoCallback<List<Todo>> daoCallback = new DaoCallback<List<Todo>>() {
+    public void getTodo(String todoId, Callback<Todo> callback) {
+        todoLocalDataSource.getTodo(todoId, new Callback<Todo>() {
             @Override
-            public List<Todo> doAsync() {
-                return todoListMapper.convert(todoDao.getAllTodo(userId));
+            public void onResponse(Todo response) {
+                callback.onResponse(response);
             }
 
             @Override
-            public void onComplete(List<Todo> response) {
-                if (response != null) {
-                    callback.onResponse(response);
-                } else {
-                    callback.onError("00002", "No data available");
-                }
+            public void onError(Error todoError) {
+                todoRemoteDataSource.getTodo(todoId, new Callback<Todo>() {
+                    @Override
+                    public void onResponse(Todo response) {
+                        callback.onResponse(response);
+                    }
+
+                    @Override
+                    public void onError(Error todoError) {
+                        callback.onError(todoError);
+                    }
+                });
+
             }
-        };
-        daoExecutor.start(daoCallback);
+        });
     }
 
     @Override
-    public void getTodo(int todoId, Callback<Todo> callback) {
-        DaoCallback<Todo> daoCallback = new DaoCallback<Todo>() {
+    public void editTodo(Todo todo, Callback<Boolean> callback) {
+
+        todoRemoteDataSource.editTodo(todo, new Callback<Boolean>() {
             @Override
-            public Todo doAsync() {
-                return todoMapper.convert(todoDao.getTodo(todoId));
+            public void onResponse(Boolean response) {
+                todoLocalDataSource.editTodo(todo, new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Boolean response) {
+                        callback.onResponse(response);
+                    }
+
+                    @Override
+                    public void onError(Error todoError) {
+                        callback.onError(todoError);
+                    }
+                });
             }
 
             @Override
-            public void onComplete(Todo response) {
-                if (response != null) {
-                    callback.onResponse(response);
-                } else {
-                    callback.onError("00002", "No data available");
-                }
+            public void onError(Error todoError) {
+                callback.onError(todoError);
             }
-        };
-        daoExecutor.start(daoCallback);
-
-    }
-
-    @Override
-    public void editTodo(int todoId, String name, String description, String date, Callback<Boolean> callback) {
-        DaoCallback<Integer> daoCallback = new DaoCallback<Integer>() {
-            @Override
-            public Integer doAsync() {
-                TodoTbl tbl = todoDao.getTodo(todoId);
-                tbl.setTodoId(todoId);
-                tbl.setDescription(description);
-                tbl.setName(name);
-                tbl.setDueDate(date);
-                return todoDao.update(tbl);
-            }
-
-            @Override
-            public void onComplete(Integer response) {
-                if (response == 1) {
-                    callback.onResponse(true);
-                } else {
-                    callback.onError("00002", "Update failed");
-                }
-            }
-        };
-        daoExecutor.start(daoCallback);
-    }
-
-    @Override
-    public void addTodo(int userId, String name, String description, String date, Callback<Boolean> callback) {
-        DaoCallback<Long> daoCallback = new DaoCallback<Long>() {
-            @Override
-            public Long doAsync() {
-                return todoDao.insert(userId, name, description, date, false);
-            }
-
-            @Override
-            public void onComplete(Long response) {
-                if (response != -1) {
-                    callback.onResponse(true);
-                } else {
-                    callback.onError("00002", "insert failed");
-                }
-            }
-        };
-        daoExecutor.start(daoCallback);
+        });
 
     }
 
     @Override
-    public void deleteTodo(int todoId, Callback<Boolean> callback) {
-        DaoCallback<Integer> daoCallback = new DaoCallback<Integer>() {
+    public void addTodo(Todo todo, Callback<Boolean> callback) {
+        todoRemoteDataSource.addTodo(todo, new Callback<Boolean>() {
             @Override
-            public Integer doAsync() {
-                return todoDao.delete(todoId);
+            public void onResponse(Boolean response) {
+                todoLocalDataSource.addTodo(todo, new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Boolean response) {
+                        callback.onResponse(response);
+                    }
+
+                    @Override
+                    public void onError(Error todoError) {
+                        callback.onError(todoError);
+                    }
+                });
             }
 
             @Override
-            public void onComplete(Integer response) {
-                if (response == 1) {
-                    callback.onResponse(true);
-                } else {
-                    callback.onError("00002", "Delete failed");
-                }
+            public void onError(Error todoError) {
+                callback.onError(todoError);
             }
-        };
-        daoExecutor.start(daoCallback);
+        });
+    }
+
+    @Override
+    public void deleteTodo(String todoId, Callback<Boolean> callback) {
+        todoRemoteDataSource.deleteTodo(todoId, new Callback<Boolean>() {
+            @Override
+            public void onResponse(Boolean response) {
+                todoLocalDataSource.deleteTodo(todoId, new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Boolean response) {
+                        callback.onResponse(response);
+                    }
+
+                    @Override
+                    public void onError(Error todoError) {
+                        callback.onError(todoError);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Error todoError) {
+                callback.onError(todoError);
+            }
+        });
     }
 }

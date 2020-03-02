@@ -1,9 +1,10 @@
 package com.android.basics.features.todo.presentation.login;
 
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Error;
+import com.android.basics.core.UseCase;
+import com.android.basics.core.UseCaseHandler;
 import com.android.basics.core.utils.DoIfNotNull;
 import com.android.basics.features.todo.domain.interactor.user.AuthenticateUserInteractor;
-import com.android.basics.features.todo.domain.model.User;
 import com.android.basics.features.todo.presentation.components.UserSession;
 
 public class LoginPresenter implements LoginContract.Presenter {
@@ -16,22 +17,24 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     private UserSession session;
 
-    public LoginPresenter(LoginContract.Navigator navigator, AuthenticateUserInteractor authenticateUserInteractor, UserSession session) {
+    private final UseCaseHandler useCaseHandler;
+
+    public LoginPresenter(LoginContract.Navigator navigator, AuthenticateUserInteractor authenticateUserInteractor, UserSession session, UseCaseHandler useCaseHandler) {
         this.navigator = navigator;
         this.authenticateUserInteractor = authenticateUserInteractor;
         this.session = session;
+        this.useCaseHandler = useCaseHandler;
     }
 
     @Override
     public void OnLoginClick(String userName, String password) {
         view.showProgressDialog();
-
-        authenticateUserInteractor.execute(AuthenticateUserInteractor.Params.forUser(userName, password), new Callback<User>() {
+        useCaseHandler.execute(authenticateUserInteractor, new AuthenticateUserInteractor.Request(userName, password), new UseCase.UseCaseCallback<AuthenticateUserInteractor.Response>() {
             @Override
-            public void onResponse(User response) {
+            public void onSuccess(AuthenticateUserInteractor.Response response) {
                 DoIfNotNull.let(view, LoginContract.View::dismissProgressDialog);
                 if (response != null) {
-                    session.setUser(response);
+                    session.setUser(response.getUser());
                     navigator.goToHomeScreen();
                 } else {
                     DoIfNotNull.let(view, LoginContract.View::showAuthenticationError);
@@ -39,15 +42,13 @@ public class LoginPresenter implements LoginContract.Presenter {
             }
 
             @Override
-            public void onError(String errorcode, String errorResponse) {
+            public void onError(Error error) {
                 DoIfNotNull.let(view, view -> {
                     view.dismissProgressDialog();
                     view.showAuthenticationError();
                 });
-
             }
         });
-
     }
 
     @Override

@@ -1,12 +1,12 @@
 package com.android.basics.features.todo.data.repository;
 
 import com.android.basics.TestUtil;
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Callback;
 import com.android.basics.features.todo.data.component.DaoCallback;
 import com.android.basics.features.todo.data.component.DaoExecutor;
-import com.android.basics.features.todo.data.mapper.UserMapper;
-import com.android.basics.features.todo.data.source.dao.UserDao;
-import com.android.basics.features.todo.data.source.entity.UserTbl;
+import com.android.basics.features.todo.data.source.local.mapper.UserMapper;
+import com.android.basics.features.todo.data.source.local.dao.UserDao;
+import com.android.basics.features.todo.data.source.local.entity.UserTbl;
 import com.android.basics.features.todo.domain.model.User;
 
 import org.junit.Before;

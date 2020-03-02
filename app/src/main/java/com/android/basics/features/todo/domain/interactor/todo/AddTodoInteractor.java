@@ -1,10 +1,14 @@
 package com.android.basics.features.todo.domain.interactor.todo;
 
-import com.android.basics.core.domain.Callback;
-import com.android.basics.core.domain.UseCase;
+import androidx.annotation.NonNull;
+
+import com.android.basics.core.Callback;
+import com.android.basics.core.Error;
+import com.android.basics.core.UseCase;
+import com.android.basics.features.todo.domain.model.Todo;
 import com.android.basics.features.todo.domain.repository.TodoRepository;
 
-public class AddTodoInteractor extends UseCase<AddTodoInteractor.Params, Boolean> {
+public class AddTodoInteractor extends UseCase<AddTodoInteractor.Request, AddTodoInteractor.Response> {
 
     private TodoRepository todoRepository;
 
@@ -13,39 +17,52 @@ public class AddTodoInteractor extends UseCase<AddTodoInteractor.Params, Boolean
     }
 
     @Override
-    protected void executeTask(AddTodoInteractor.Params param, final Callback<Boolean> callback) {
-        todoRepository.addTodo(param.userId, param.name, param.description, param.date, new Callback<Boolean>() {
+    protected void executeUseCase(Request params) {
+        this.todoRepository.addTodo(params.getTodo(), new Callback<Boolean>() {
             @Override
             public void onResponse(Boolean response) {
-                if (!isDisposed()) {
-                    callback.onResponse(response);
+                if (isNotDisposed()) {
+                    getUseCaseCallback().onSuccess(new Response(response));
                 }
             }
 
             @Override
-            public void onError(String errorcode, String errorResponse) {
-                if (!isDisposed()) {
-                    callback.onError(errorcode, errorResponse);
+            public void onError(Error todoError) {
+                if (isNotDisposed()) {
+                    getUseCaseCallback().onError(todoError);
                 }
             }
         });
     }
 
-    public static class Params {
-        private int userId;
+    public static final class Request implements UseCase.Request {
+        private String userId;
         private String name;
         private String description;
         private String date;
 
-        private Params(int userId, String name, String description, String date) {
+        public Request(String userId, String name, String description, String date) {
             this.userId = userId;
             this.name = name;
             this.description = description;
             this.date = date;
         }
 
-        public static AddTodoInteractor.Params forTodo(int userId, String name, String description, String date) {
-            return new AddTodoInteractor.Params(userId, name, description, date);
+        public Todo getTodo() {
+            return new Todo(userId, name, description, date);
+        }
+    }
+
+    public static final class Response implements UseCase.Response {
+
+        private final boolean isSuccess;
+
+        public Response(@NonNull boolean isSuccess) {
+            this.isSuccess = isSuccess;
+        }
+
+        public boolean isSuccess() {
+            return isSuccess;
         }
     }
 }

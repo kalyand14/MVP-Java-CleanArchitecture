@@ -3,6 +3,7 @@ package com.android.basics.features.todo.presentation.home;
 import android.app.ProgressDialog;
 
 import com.android.basics.core.TodoApplication;
+import com.android.basics.core.UseCaseHandler;
 import com.android.basics.di.ApplicationScope;
 import com.android.basics.features.todo.di.TodoScope;
 import com.android.basics.features.todo.di.UserScope;
@@ -45,7 +46,7 @@ public class HomeScreenInjector {
 
     private void injectObject(HomeActivity activity) {
         activity.user = UserSession.getInstance().getUser();
-        activity.presenter = new HomeScreenPresenter(provideGetTodoList(), UserSession.getInstance(), UserScope.getInstance(), provideNavigator(activity));
+        activity.presenter = new HomeScreenPresenter(provideGetTodoList(), UserSession.getInstance(), UserScope.getInstance(), provideNavigator(activity), UseCaseHandler.getInstance());
     }
 
     private HomeScreenContract.Navigator provideNavigator(HomeActivity activity) {

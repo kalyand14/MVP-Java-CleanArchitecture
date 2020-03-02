@@ -1,6 +1,6 @@
 package com.android.basics.features.todo.presentation.registration;
 
-import com.android.basics.core.presenetation.BasePresenter;
+import com.android.basics.core.BasePresenter;
 
 public interface RegisterUserContract {
 

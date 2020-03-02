@@ -3,6 +3,7 @@ package com.android.basics.features.todo.presentation.todo.add;
 import android.app.ProgressDialog;
 
 import com.android.basics.core.TodoApplication;
+import com.android.basics.core.UseCaseHandler;
 import com.android.basics.di.ApplicationScope;
 import com.android.basics.features.todo.domain.interactor.todo.AddTodoInteractor;
 import com.android.basics.features.todo.presentation.TodoNavigator;
@@ -35,7 +36,7 @@ public class AddTodoInjector {
     }
 
     private void injectObject(AddTodoActivity activity) {
-        activity.presenter = new AddTodoPresenter(provideNavigator(activity), provideAddTodo(), UserSession.getInstance());
+        activity.presenter = new AddTodoPresenter(provideNavigator(activity), provideAddTodo(), UserSession.getInstance(),  UseCaseHandler.getInstance());
     }
 
     private AddTodoContract.Navigator provideNavigator(AddTodoActivity activity) {

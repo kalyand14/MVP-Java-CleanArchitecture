@@ -1,7 +1,7 @@
 package com.android.basics.core.utils.res;
 
 import com.android.basics.R;
-import com.android.basics.core.domain.Mapper;
+import com.android.basics.core.Mapper;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

@@ -1,6 +1,6 @@
 package com.android.basics.features.todo.presentation.home;
 
-import com.android.basics.core.presenetation.BasePresenter;
+import com.android.basics.core.BasePresenter;
 import com.android.basics.features.todo.domain.model.Todo;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public interface HomeScreenContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void onLoadTodoList(int userId);
+        void onLoadTodoList(String userId);
 
         void onLogout();
 

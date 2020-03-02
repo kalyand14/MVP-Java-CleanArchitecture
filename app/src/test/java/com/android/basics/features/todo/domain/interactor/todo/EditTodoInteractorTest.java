@@ -1,7 +1,7 @@
 package com.android.basics.features.todo.domain.interactor.todo;
 
 import com.android.basics.TestUtil;
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Callback;
 import com.android.basics.features.todo.domain.repository.TodoRepository;
 
 import org.junit.Before;
@@ -22,7 +22,7 @@ public class EditTodoInteractorTest {
     private TodoRepository todoRepository;
 
     @Mock
-    private EditTodoInteractor.Params params;
+    private EditTodoInteractor.Request request;
 
     @InjectMocks
     private EditTodoInteractor interactor;
@@ -38,12 +38,12 @@ public class EditTodoInteractorTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        params = EditTodoInteractor.Params.forTodo(TestUtil.TODO_ID, TestUtil.USER_NAME, TestUtil.DESCRIPTION, TestUtil.DATE);
+        request = EditTodoInteractor.Request.forTodo(TestUtil.TODO_ID, TestUtil.USER_NAME, TestUtil.DESCRIPTION, TestUtil.DATE);
     }
 
     @Test
     public void testExecute_for_success() {
-        interactor.executeTask(params, todoCallback);
+        interactor.executeTask(request, todoCallback);
         verify(todoRepository).editTodo(
                 eq(TestUtil.TODO_ID),
                 eq(TestUtil.USER_NAME),
@@ -58,7 +58,7 @@ public class EditTodoInteractorTest {
     @Test
     public void testExecute_for_success_diposed() {
         interactor.dispose();
-        interactor.executeTask(params, todoCallback);
+        interactor.executeTask(request, todoCallback);
         verify(todoRepository).editTodo(
                 eq(TestUtil.TODO_ID),
                 eq(TestUtil.USER_NAME),
@@ -72,7 +72,7 @@ public class EditTodoInteractorTest {
 
     @Test
     public void testExecute_forfailure() {
-        interactor.executeTask(params, todoCallback);
+        interactor.executeTask(request, todoCallback);
         verify(todoRepository).editTodo(
                 eq(TestUtil.TODO_ID),
                 eq(TestUtil.USER_NAME),
@@ -87,7 +87,7 @@ public class EditTodoInteractorTest {
     @Test
     public void testExecute_forfailure_disposed() {
         interactor.dispose();
-        interactor.executeTask(params, todoCallback);
+        interactor.executeTask(request, todoCallback);
         verify(todoRepository).editTodo(
                 eq(TestUtil.TODO_ID),
                 eq(TestUtil.USER_NAME),

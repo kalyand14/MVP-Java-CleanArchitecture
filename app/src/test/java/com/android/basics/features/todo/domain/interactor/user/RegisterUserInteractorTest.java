@@ -1,7 +1,7 @@
 package com.android.basics.features.todo.domain.interactor.user;
 
 import com.android.basics.TestUtil;
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Callback;
 import com.android.basics.features.todo.domain.model.User;
 import com.android.basics.features.todo.domain.repository.UserRepository;
 

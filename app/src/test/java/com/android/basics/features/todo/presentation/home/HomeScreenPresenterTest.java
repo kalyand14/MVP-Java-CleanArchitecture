@@ -1,7 +1,7 @@
 package com.android.basics.features.todo.presentation.home;
 
 import com.android.basics.TestUtil;
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Callback;
 import com.android.basics.features.todo.di.UserScope;
 import com.android.basics.features.todo.domain.interactor.todo.GetTodoListInteractor;
 import com.android.basics.features.todo.domain.model.Todo;

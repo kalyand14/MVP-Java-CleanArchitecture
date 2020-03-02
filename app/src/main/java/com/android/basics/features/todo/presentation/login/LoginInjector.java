@@ -3,6 +3,7 @@ package com.android.basics.features.todo.presentation.login;
 import android.app.ProgressDialog;
 
 import com.android.basics.core.TodoApplication;
+import com.android.basics.core.UseCaseHandler;
 import com.android.basics.di.ApplicationScope;
 import com.android.basics.features.todo.domain.interactor.user.AuthenticateUserInteractor;
 import com.android.basics.features.todo.presentation.TodoNavigator;
@@ -37,7 +38,7 @@ public class LoginInjector {
     }
 
     private void injectObject(LoginActivity activity) {
-        activity.presenter = new LoginPresenter(provideNavigator(activity), provideAuthenticator(), UserSession.getInstance());
+        activity.presenter = new LoginPresenter(provideNavigator(activity), provideAuthenticator(), UserSession.getInstance(),  UseCaseHandler.getInstance());
     }
 
     private LoginContract.Navigator provideNavigator(LoginActivity activity) {

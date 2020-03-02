@@ -1,6 +1,6 @@
 package com.android.basics.features.todo.presentation.todo.add;
 
-import com.android.basics.core.presenetation.BasePresenter;
+import com.android.basics.core.BasePresenter;
 
 public interface AddTodoContract {
     interface View {

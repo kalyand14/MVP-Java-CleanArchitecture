@@ -1,6 +1,9 @@
 package com.android.basics.features.todo.presentation.todo.edit;
 
-import com.android.basics.core.domain.Callback;
+import com.android.basics.core.Error;
+import com.android.basics.core.UseCase;
+import com.android.basics.core.UseCaseHandler;
+import com.android.basics.core.utils.DoIfNotNull;
 import com.android.basics.features.todo.domain.interactor.todo.DeleteTodoInteractor;
 import com.android.basics.features.todo.domain.interactor.todo.EditTodoInteractor;
 import com.android.basics.features.todo.domain.model.Todo;
@@ -13,16 +16,19 @@ public class EditTodoPresenter implements EditTodoContract.Presenter {
     private EditTodoContract.Navigator navigator;
     private EditTodoContract.View view;
     private TodoSession session;
+    private final UseCaseHandler useCaseHandler;
 
     public EditTodoPresenter(
             EditTodoInteractor editTodoInteractor,
             DeleteTodoInteractor deleteTodoInteractor,
             EditTodoContract.Navigator navigator,
-            TodoSession session) {
+            TodoSession session,
+            UseCaseHandler useCaseHandler) {
         this.editTodoInteractor = editTodoInteractor;
         this.deleteTodoInteractor = deleteTodoInteractor;
         this.navigator = navigator;
         this.session = session;
+        this.useCaseHandler = useCaseHandler;
     }
 
     @Override
@@ -36,23 +42,31 @@ public class EditTodoPresenter implements EditTodoContract.Presenter {
     @Override
     public void onSubmit(String name, String desc, String date) {
         view.showProgressDialog("Updating todo");
-        this.editTodoInteractor.execute(EditTodoInteractor.Params.forTodo(session.getTodo().getTodoId(), name, desc, date), new Callback<Boolean>() {
-            @Override
-            public void onResponse(Boolean response) {
-                view.dismissProgressDialog();
-                if (response) {
-                    view.showSuccessDialog("Record successfully updated.");
-                } else {
-                    view.showErrorDialog("There was a problem. could not able to update the record.");
-                }
-            }
 
-            @Override
-            public void onError(String errorcode, String errorResponse) {
-                view.dismissProgressDialog();
-                view.showErrorDialog("There was a problem. could not able to update the record.");
-            }
-        });
+        useCaseHandler.execute(
+                editTodoInteractor,
+                new EditTodoInteractor.Request(session.getTodo().getTodoId(), session.getTodo().getUserId(), name, desc, date),
+                new UseCase.UseCaseCallback<EditTodoInteractor.Response>() {
+                    @Override
+                    public void onSuccess(EditTodoInteractor.Response response) {
+                        DoIfNotNull.let(view, view -> {
+                            view.dismissProgressDialog();
+                            if (response.isSuccess()) {
+                                view.showSuccessDialog("Record successfully updated.");
+                            } else {
+                                view.showErrorDialog("There was a problem. could not able to update the record.");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+                        DoIfNotNull.let(view, view -> {
+                            view.dismissProgressDialog();
+                            view.showErrorDialog("There was a problem. could not able to update the record.");
+                        });
+                    }
+                });
     }
 
     @Override
@@ -68,21 +82,26 @@ public class EditTodoPresenter implements EditTodoContract.Presenter {
     @Override
     public void onDelete() {
         view.showProgressDialog("Deleting todo");
-        this.deleteTodoInteractor.execute(session.getTodo().getTodoId(), new Callback<Boolean>() {
+
+        useCaseHandler.execute(deleteTodoInteractor, new DeleteTodoInteractor.Request(session.getTodo().getTodoId()), new UseCase.UseCaseCallback<DeleteTodoInteractor.Response>() {
             @Override
-            public void onResponse(Boolean response) {
-                view.dismissProgressDialog();
-                if (response) {
-                    view.showSuccessDialog("Record successfully deleted.");
-                } else {
-                    view.showErrorDialog("Error deleting todo");
-                }
+            public void onSuccess(DeleteTodoInteractor.Response response) {
+                DoIfNotNull.let(view, view -> {
+                    view.dismissProgressDialog();
+                    if (response.isSuccess()) {
+                        view.showSuccessDialog("Record successfully deleted.");
+                    } else {
+                        view.showErrorDialog("Error deleting todo");
+                    }
+                });
             }
 
             @Override
-            public void onError(String errorcode, String errorResponse) {
-                view.dismissProgressDialog();
-                view.showErrorDialog("Error deleting todo");
+            public void onError(Error error) {
+                DoIfNotNull.let(view, view -> {
+                    view.dismissProgressDialog();
+                    view.showErrorDialog("Error deleting todo");
+                });
             }
         });
     }
