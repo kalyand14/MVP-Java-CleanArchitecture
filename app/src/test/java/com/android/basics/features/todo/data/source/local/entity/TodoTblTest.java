@@ -12,7 +12,7 @@ public class TodoTblTest {
 
     @Before
     public void setUp() {
-        todoTbl = new TodoTbl(TestUtil.USER_ID, TestUtil.NAME, TestUtil.DESCRIPTION, TestUtil.DATE, false);
+        todoTbl = new TodoTbl(TestUtil.TODO_ID, TestUtil.USER_ID, TestUtil.NAME, TestUtil.DESCRIPTION, TestUtil.DATE, false);
     }
 
     @Test

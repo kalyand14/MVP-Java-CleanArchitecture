@@ -13,7 +13,7 @@ public interface TodoDataSource {
 
     void editTodo(Todo todo, Callback<Boolean> callback);
 
-    void addTodo(Todo todo, Callback<Boolean> callback);
+    void addTodo(Todo todo, Callback<Todo> callback);
 
     void deleteTodo(String todoId, Callback<Boolean> callback);
 }

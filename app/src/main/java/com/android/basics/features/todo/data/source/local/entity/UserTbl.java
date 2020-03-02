@@ -15,8 +15,8 @@ public class UserTbl {
     private String userName;
     private String password;
 
-    public UserTbl(String userName, String password) {
-        this.userId = UUID.randomUUID().toString();
+    public UserTbl(String userId, String userName, String password) {
+        this.userId = userId;
         this.userName = userName;
         this.password = password;
     }

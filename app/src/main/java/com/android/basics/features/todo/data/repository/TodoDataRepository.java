@@ -112,13 +112,13 @@ public class TodoDataRepository implements TodoRepository {
 
     @Override
     public void addTodo(Todo todo, Callback<Boolean> callback) {
-        todoRemoteDataSource.addTodo(todo, new Callback<Boolean>() {
+        todoRemoteDataSource.addTodo(todo, new Callback<Todo>() {
             @Override
-            public void onResponse(Boolean response) {
-                todoLocalDataSource.addTodo(todo, new Callback<Boolean>() {
+            public void onResponse(Todo response) {
+                todoLocalDataSource.addTodo(response, new Callback<Todo>() {
                     @Override
-                    public void onResponse(Boolean response) {
-                        callback.onResponse(response);
+                    public void onResponse(Todo response) {
+                        callback.onResponse(response != null);
                     }
 
                     @Override

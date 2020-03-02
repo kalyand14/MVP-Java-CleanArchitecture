@@ -6,8 +6,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.UUID;
-
 @Entity(tableName = "todo")
 public class TodoTbl {
 
@@ -36,12 +34,13 @@ public class TodoTbl {
     private Boolean isCompleted;
 
     public TodoTbl(
+            @NonNull String todoId,
             @NonNull String userId,
             @Nullable String name,
             @Nullable String description,
             @NonNull String dueDate,
             boolean isCompleted) {
-        this.todoId = UUID.randomUUID().toString();
+        this.todoId = todoId;
         this.userId = userId;
         this.name = name;
         this.description = description;

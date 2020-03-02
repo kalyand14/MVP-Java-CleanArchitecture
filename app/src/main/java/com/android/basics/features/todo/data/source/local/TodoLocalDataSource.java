@@ -86,12 +86,12 @@ public class TodoLocalDataSource implements TodoDataSource {
     }
 
     @Override
-    public void addTodo(Todo in, Callback<Boolean> callback) {
+    public void addTodo(Todo in, Callback<Todo> callback) {
         appExecutors.diskIO().execute(() -> {
             final long result = todoDao.insert(in.getTodoId(), in.getUserId(), in.getName(), in.getDescription(), in.getDueDate(), false);
             appExecutors.mainThread().execute(() -> {
                 if (result != -1) {
-                    callback.onResponse(true);
+                    callback.onResponse(in);
                 } else {
                     callback.onError(operationFailed);
                 }

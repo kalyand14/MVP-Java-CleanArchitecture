@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.android.basics.core.Callback;
+import com.android.basics.core.Error;
+import com.android.basics.core.utils.RepoUtils;
 import com.android.basics.features.todo.data.source.TodoDataSource;
 import com.android.basics.features.todo.domain.model.Todo;
 
@@ -12,8 +14,11 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class TodoRemoteDataSource implements TodoDataSource {
+
+    private final Error noDataAvailableError = new Error(new Exception("No data available"));
 
     private final int SERVICE_LATENCY_IN_MILLIS = 5000;
     private final Map<String, Todo> TODO_SERVICE_DATA;
@@ -24,19 +29,31 @@ public class TodoRemoteDataSource implements TodoDataSource {
 
     @Override
     public void getTodoList(String userId, Callback<List<Todo>> callback) {
+
+        final List<Todo> todoList = new ArrayList<>(TODO_SERVICE_DATA.values());
         // Simulate network by delaying the execution.
         Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(() -> callback.onResponse(new ArrayList<>(TODO_SERVICE_DATA.values())),
-                SERVICE_LATENCY_IN_MILLIS);
+        handler.postDelayed(() -> {
+            if (RepoUtils.isNotNullNotEmpty(todoList)) {
+                callback.onResponse(todoList);
+            } else {
+                callback.onError(noDataAvailableError);
+            }
+        }, SERVICE_LATENCY_IN_MILLIS);
     }
 
     @Override
     public void getTodo(String todoId, Callback<Todo> callback) {
         final Todo todo = TODO_SERVICE_DATA.get(todoId);
         // Simulate network by delaying the execution.
-        Handler handler = new Handler();
-        handler.postDelayed(() -> callback.onResponse(todo),
-                SERVICE_LATENCY_IN_MILLIS);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(() -> {
+            if (todo != null) {
+                callback.onResponse(todo);
+            } else {
+                callback.onError(noDataAvailableError);
+            }
+        }, SERVICE_LATENCY_IN_MILLIS);
 
     }
 
@@ -45,19 +62,21 @@ public class TodoRemoteDataSource implements TodoDataSource {
         Todo editedTodo = new Todo(todo.getTodoId(), todo.getUserId(), todo.getName(), todo.getDescription(), todo.getDueDate(), todo.isCompleted());
         TODO_SERVICE_DATA.put(todo.getTodoId(), editedTodo);
 
-        Handler handler = new Handler();
+        Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> callback.onResponse(true),
                 SERVICE_LATENCY_IN_MILLIS);
     }
 
     @Override
-    public void addTodo(Todo todo, Callback<Boolean> callback) {
-        Todo addedTodo = new Todo(todo.getTodoId(), todo.getUserId(), todo.getName(), todo.getDescription(), todo.getDueDate(), todo.isCompleted());
-        TODO_SERVICE_DATA.put(todo.getTodoId(), addedTodo);
+    public void addTodo(Todo todo, Callback<Todo> callback) {
+        Todo addedTodo = new Todo(UUID.randomUUID().toString(), todo.getUserId(), todo.getName(), todo.getDescription(), todo.getDueDate(), todo.isCompleted());
+        TODO_SERVICE_DATA.put(addedTodo.getTodoId(), addedTodo);
 
-        Handler handler = new Handler();
-        handler.postDelayed(() -> callback.onResponse(true),
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(() -> callback.onResponse(addedTodo),
                 SERVICE_LATENCY_IN_MILLIS);
+
+        //callback.onResponse(addedTodo);
     }
 
     @Override
@@ -70,7 +89,7 @@ public class TodoRemoteDataSource implements TodoDataSource {
             }
         }
         // Simulate network by delaying the execution.
-        Handler handler = new Handler();
+        Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> callback.onResponse(true),
                 SERVICE_LATENCY_IN_MILLIS);
     }

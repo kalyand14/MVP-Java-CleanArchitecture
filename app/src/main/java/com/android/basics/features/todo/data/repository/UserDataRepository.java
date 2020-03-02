@@ -62,7 +62,7 @@ public class UserDataRepository implements UserRepository {
         userRemoteLocalSource.register(user, new Callback<User>() {
             @Override
             public void onResponse(User response) {
-                userLocalDataSource.register(user, new Callback<User>() {
+                userLocalDataSource.register(response, new Callback<User>() {
                     @Override
                     public void onResponse(User response) {
                         callback.onResponse(response);
