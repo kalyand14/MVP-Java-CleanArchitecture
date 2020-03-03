@@ -97,6 +97,7 @@ dependencies {
     implementation deps.recyclerview
     implementation deps.constraint_layout
     implementation deps.timber
+    implementation deps.annotations
     implementation deps.espresso.idling_resource
     implementation deps.room.runtime
     annotationProcessor deps.room.compiler
