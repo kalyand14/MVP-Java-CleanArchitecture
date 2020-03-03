@@ -68,26 +68,8 @@ public class TodoLocalDataSourceTest extends TodoDatabaseTest {
         });
     }
 
-    @Test
-    public void insert() {
-        assertInsert(TestUtil.TODO_ID);
-        assertSelect(TestUtil.TODO_ID);
-    }
-
-    @Test
-    public void select() {
-        assertInsert(TestUtil.TODO_ID);
-        assertInsert(TestUtil.TODO_ID_2);
-        assertSelect(TestUtil.TODO_ID);
-        assertSelect(TestUtil.TODO_ID_2);
-    }
-
-    @Test
-    public void delete() {
-        assertInsert(TestUtil.TODO_ID);
-        assertInsert(TestUtil.TODO_ID_2);
-
-        localDataSource.deleteTodo(TestUtil.TODO_ID_2, new Callback<Boolean>() {
+    private void assertDelete(String todoId) {
+        localDataSource.deleteTodo(todoId, new Callback<Boolean>() {
             @Override
             public void onResponse(Boolean response) {
                 Assert.assertTrue(response);
@@ -98,28 +80,22 @@ public class TodoLocalDataSourceTest extends TodoDatabaseTest {
                 Assert.fail("Callback error");
             }
         });
-        localDataSource.getTodo(TestUtil.TODO_ID_2, new Callback<Todo>() {
-            @Override
-            public void onResponse(Todo response) {
-                Assert.fail("Callback error");
-            }
-
-            @Override
-            public void onError(Error todoError) {
-                Assert.assertNotNull(todoError);
-            }
-        });
     }
 
     @Test
-    public void update() {
+    public void insertReadDelete() {
         assertInsert(TestUtil.TODO_ID);
-        assertInsert(TestUtil.TODO_ID_2);
+        assertSelect(TestUtil.TODO_ID);
+        assertDelete(TestUtil.TODO_ID);
+    }
 
+    @Test
+    public void insertReadUpdateReadDelete() {
+        assertInsert(TestUtil.TODO_ID_2);
+        assertSelect(TestUtil.TODO_ID_2);
         localDataSource.getTodo(TestUtil.TODO_ID_2, new Callback<Todo>() {
             @Override
             public void onResponse(Todo response) {
-
                 response.setName(TestUtil.EDIT_NAME);
                 response.setDescription(TestUtil.EDIT_DESCRIPTION);
                 response.setDueDate(TestUtil.EDIT_DATE);
@@ -142,7 +118,6 @@ public class TodoLocalDataSourceTest extends TodoDatabaseTest {
                 Assert.fail("Callback error");
             }
         });
-
         localDataSource.getTodo(TestUtil.TODO_ID_2, new Callback<Todo>() {
             @Override
             public void onResponse(Todo response) {
@@ -153,9 +128,11 @@ public class TodoLocalDataSourceTest extends TodoDatabaseTest {
 
             @Override
             public void onError(Error todoError) {
-
+                Assert.fail("Callback error");
             }
         });
-
+        assertDelete(TestUtil.TODO_ID_2);
     }
+
+
 }
