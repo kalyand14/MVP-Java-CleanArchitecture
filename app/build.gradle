@@ -1,7 +1,6 @@
 apply from: '../jacoco.gradle'
 
 apply plugin: 'com.android.application'
-apply plugin: 'jacoco-android'
 
 tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
@@ -50,9 +49,12 @@ android {
         mock {
             dimension "default"
             applicationIdSuffix = ".mock"
+            versionNameSuffix "-mock"
         }
         prod {
             dimension "default"
+            applicationIdSuffix ".prod"
+            versionNameSuffix "-prod"
         }
     }
 
