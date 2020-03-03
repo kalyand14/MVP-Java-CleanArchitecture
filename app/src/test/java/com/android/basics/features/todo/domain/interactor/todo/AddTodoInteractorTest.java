@@ -1,7 +1,9 @@
 package com.android.basics.features.todo.domain.interactor.todo;
 
-import com.android.basics.TestUtil;
 import com.android.basics.core.Callback;
+import com.android.basics.core.Error;
+import com.android.basics.core.UseCase;
+import com.android.basics.features.todo.domain.model.Todo;
 import com.android.basics.features.todo.domain.repository.TodoRepository;
 
 import org.junit.Before;
@@ -11,9 +13,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -31,74 +35,58 @@ public class AddTodoInteractorTest {
     private AddTodoInteractor interactor;
 
     @Mock
-    private Callback<Boolean> todoCallback;
+    private UseCase.UseCaseCallback<AddTodoInteractor.Response> todoCallback;
 
     @Captor
     private ArgumentCaptor<Callback<Boolean>> todoCallbackCaptor;
+
+    @Mock
+    private Todo todo;
+
+    @Mock
+    private Error error;
 
     private static final boolean IS_ADDED = true;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        request = AddTodoInteractor.Request.forTodo(TestUtil.USER_ID, TestUtil.USER_NAME, TestUtil.DESCRIPTION, TestUtil.DATE);
+        Mockito.when(request.getTodo()).thenReturn(todo);
+        interactor.setUseCaseCallback(todoCallback);
     }
 
     @Test
     public void testExecute_for_success() {
-        interactor.executeTask(request, todoCallback);
-        verify(todoRepository).addTodo(
-                eq(TestUtil.USER_ID),
-                eq(TestUtil.USER_NAME),
-                eq(TestUtil.DESCRIPTION),
-                eq(TestUtil.DATE),
-                todoCallbackCaptor.capture()
-        );
+        interactor.executeUseCase(request);
+        verify(todoRepository).addTodo(eq(todo), todoCallbackCaptor.capture());
         todoCallbackCaptor.getValue().onResponse(IS_ADDED);
-        verify(todoCallback).onResponse(IS_ADDED);
+        verify(todoCallback).onSuccess(any(AddTodoInteractor.Response.class));
     }
 
     @Test
     public void testExecute_for_success_diposed() {
         interactor.dispose();
-        interactor.executeTask(request, todoCallback);
-        verify(todoRepository).addTodo(
-                eq(TestUtil.USER_ID),
-                eq(TestUtil.USER_NAME),
-                eq(TestUtil.DESCRIPTION),
-                eq(TestUtil.DATE),
-                todoCallbackCaptor.capture()
-        );
+        interactor.executeUseCase(request);
+        verify(todoRepository).addTodo(eq(todo), todoCallbackCaptor.capture());
         todoCallbackCaptor.getValue().onResponse(IS_ADDED);
-        verify(todoCallback, never()).onResponse(IS_ADDED);
+        verify(todoCallback, Mockito.never()).onSuccess(any(AddTodoInteractor.Response.class));
     }
 
     @Test
     public void testExecute_forfailure() {
-        interactor.executeTask(request, todoCallback);
-        verify(todoRepository).addTodo(
-                eq(TestUtil.USER_ID),
-                eq(TestUtil.USER_NAME),
-                eq(TestUtil.DESCRIPTION),
-                eq(TestUtil.DATE),
-                todoCallbackCaptor.capture()
-        );
-        todoCallbackCaptor.getValue().onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
-        verify(todoCallback).onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
+        interactor.executeUseCase(request);
+        verify(todoRepository).addTodo(eq(todo), todoCallbackCaptor.capture());
+        todoCallbackCaptor.getValue().onError(error);
+        verify(todoCallback).onError(error);
     }
 
     @Test
     public void testExecute_forfailure_disposed() {
         interactor.dispose();
-        interactor.executeTask(request, todoCallback);
-        verify(todoRepository).addTodo(
-                eq(TestUtil.USER_ID),
-                eq(TestUtil.USER_NAME),
-                eq(TestUtil.DESCRIPTION),
-                eq(TestUtil.DATE),
-                todoCallbackCaptor.capture()
-        );
-        todoCallbackCaptor.getValue().onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
-        verify(todoCallback, never()).onError(TestUtil.ERROR_CODE, TestUtil.ERROR_MESSAGE);
+        interactor.executeUseCase(request);
+        verify(todoRepository).addTodo(eq(todo), todoCallbackCaptor.capture());
+        todoCallbackCaptor.getValue().onError(error);
+        verify(todoCallback, never()).onError(error);
     }
+
 }

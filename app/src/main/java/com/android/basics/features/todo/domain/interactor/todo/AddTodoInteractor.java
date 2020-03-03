@@ -35,7 +35,7 @@ public class AddTodoInteractor extends UseCase<AddTodoInteractor.Request, AddTod
         });
     }
 
-    public static final class Request implements UseCase.Request {
+    public static class Request implements UseCase.Request {
         private String userId;
         private String name;
         private String description;
@@ -53,7 +53,7 @@ public class AddTodoInteractor extends UseCase<AddTodoInteractor.Request, AddTod
         }
     }
 
-    public static final class Response implements UseCase.Response {
+    public static class Response implements UseCase.Response {
 
         private final boolean isSuccess;
 

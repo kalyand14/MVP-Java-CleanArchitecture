@@ -24,8 +24,8 @@ public class UserTest {
 
     @Test
     public void test_setter() {
-        user.setUserId(3);
-        Assert.assertEquals(3, user.getUserId());
+        user.setUserId("3");
+        Assert.assertEquals("3", user.getUserId());
         user.setUserName("test name");
         Assert.assertEquals("test name", user.getUserName());
         user.setPassword("test description");

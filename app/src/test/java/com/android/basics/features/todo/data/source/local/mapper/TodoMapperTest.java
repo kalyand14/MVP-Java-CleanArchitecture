@@ -1,5 +1,6 @@
 package com.android.basics.features.todo.data.source.local.mapper;
 
+import com.android.basics.TestFactory;
 import com.android.basics.TestUtil;
 import com.android.basics.features.todo.domain.model.Todo;
 
@@ -18,7 +19,7 @@ public class TodoMapperTest {
 
     @Test
     public void test_convert_success() {
-        Todo todo = todoMapper.convert(TestUtil.buildMockTodoTbl(TestUtil.TODO_ID));
+        Todo todo = todoMapper.convert(TestFactory.buildMockTodoTbl(TestUtil.TODO_ID));
         Assert.assertEquals(TestUtil.USER_ID, todo.getTodoId());
     }
 

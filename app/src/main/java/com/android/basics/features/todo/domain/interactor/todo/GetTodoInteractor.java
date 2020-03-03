@@ -34,7 +34,7 @@ public class GetTodoInteractor extends UseCase<GetTodoInteractor.Request, GetTod
     }
 
 
-    public static final class Request implements UseCase.Request {
+    public static class Request implements UseCase.Request {
 
         private final String todoId;
 
@@ -47,7 +47,7 @@ public class GetTodoInteractor extends UseCase<GetTodoInteractor.Request, GetTod
         }
     }
 
-    public static final class Response implements UseCase.Response {
+    public static class Response implements UseCase.Response {
 
         private final Todo todo;
 

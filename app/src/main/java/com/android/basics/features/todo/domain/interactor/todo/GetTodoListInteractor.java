@@ -1,5 +1,7 @@
 package com.android.basics.features.todo.domain.interactor.todo;
 
+import androidx.annotation.VisibleForTesting;
+
 import com.android.basics.core.Callback;
 import com.android.basics.core.Error;
 import com.android.basics.core.UseCase;
@@ -22,7 +24,7 @@ public class GetTodoListInteractor extends UseCase<GetTodoListInteractor.Request
             @Override
             public void onResponse(List<Todo> response) {
                 if (isNotDisposed()) {
-                    getUseCaseCallback().onSuccess(new Response(response));
+                    getUseCaseCallback().onSuccess(createResponse(response));
                 }
             }
 
@@ -35,7 +37,12 @@ public class GetTodoListInteractor extends UseCase<GetTodoListInteractor.Request
         });
     }
 
-    public static final class Request implements UseCase.Request {
+    @VisibleForTesting
+    public Response createResponse(List<Todo> payLoad) {
+        return new Response(payLoad);
+    }
+
+    public static class Request implements UseCase.Request {
 
         private final String userId;
 
@@ -48,7 +55,7 @@ public class GetTodoListInteractor extends UseCase<GetTodoListInteractor.Request
         }
     }
 
-    public static final class Response implements UseCase.Response {
+    public static class Response implements UseCase.Response {
 
         private final List<Todo> todoList;
 

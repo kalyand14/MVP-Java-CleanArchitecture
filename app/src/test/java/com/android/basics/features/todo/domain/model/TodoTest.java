@@ -27,10 +27,10 @@ public class TodoTest {
 
     @Test
     public void test_setter() {
-        todo.setTodoId(2);
-        Assert.assertEquals(2, todo.getTodoId());
-        todo.setUserId(3);
-        Assert.assertEquals(3, todo.getUserId());
+        todo.setTodoId("2");
+        Assert.assertEquals("2", todo.getTodoId());
+        todo.setUserId("3");
+        Assert.assertEquals("3", todo.getUserId());
         todo.setName("test name");
         Assert.assertEquals("test name", todo.getName());
         todo.setDescription("test description");
