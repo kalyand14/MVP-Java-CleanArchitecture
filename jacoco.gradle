@@ -3,7 +3,7 @@ apply plugin: 'jacoco'
 task jacocoTestReport(type: JacocoReport, dependsOn: [
 //if you have already run those tasks in your build, just comment them
 //testFlavor1Environment1DebugUnitTest
-'testDebugUnitTest'
+'testMockDebugUnitTest', 'testProdDebugUnitTest'
 ]) {
 //Define which type of report you want to generate
     reports {
@@ -54,7 +54,8 @@ task jacocoTestReport(type: JacocoReport, dependsOn: [
     //As you want to gather all your tests reports, add the ec and exec you want to be took into
     //account when generating the report
     executionData = fileTree(dir: "$buildDir", includes: [
-            "jacoco/testDebugUnitTest.exec",
+            "jacoco/testMockDebugUnitTest.exec",
+            "jacoco/testProdDebugUnitTest.exec",
             "outputs/code-coverage/connected/*coverage.ec"
     ])
 }
