@@ -1,19 +1,14 @@
 package com.android.basics.featutes.todo.source.local.dao;
 
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.SmallTest;
-
 import com.android.basics.TestUtil;
 import com.android.basics.features.todo.data.source.local.entity.TodoTbl;
 import com.android.basics.featutes.todo.source.TodoDatabaseTest;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
-@SmallTest
+
 public class TodoDaoTest extends TodoDatabaseTest {
 
     private static final String TEST_TITLE = "This is a test title";

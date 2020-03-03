@@ -2,8 +2,6 @@ package com.android.basics.featutes.todo.source.local;
 
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
 
 import com.android.basics.TestUtil;
 import com.android.basics.core.Callback;
@@ -20,12 +18,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.hamcrest.core.Is.is;
 
-@RunWith(AndroidJUnit4.class)
-@LargeTest
+
 public class TodoLocalDataSourceTest {
 
     private TodoDatabase database;
