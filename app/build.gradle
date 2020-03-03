@@ -74,9 +74,7 @@ android {
     }
 
     testOptions {
-        animationsDisabled = true
         unitTests {
-            returnDefaultValues = true
             includeAndroidResources = true
             all {
                 testLogging {
@@ -90,24 +88,19 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    // App dependencies
-    implementation deps.app_compat
-    implementation deps.cardview
-    implementation deps.material
-    implementation deps.recyclerview
-    implementation deps.constraint_layout
-    implementation deps.timber
-    implementation deps.annotations
-    implementation deps.espresso.idling_resource
-    implementation deps.room.runtime
-    annotationProcessor deps.room.compiler
-
-    // Architecture Components
     implementation deps.arch_core.runtime
+    implementation deps.app_compat
+    implementation deps.material
+    implementation deps.cardview
+    implementation deps.constraint_layout
+
+    implementation deps.recyclerview
     implementation deps.lifecycle.runtime
+
+
+    // Annotation processor
     annotationProcessor deps.lifecycle.compiler
 
-    // Dependencies for local unit tests
     testImplementation deps.junit
     testImplementation deps.mockito.core
     testImplementation deps.robolectric
@@ -117,21 +110,7 @@ dependencies {
     testImplementation deps.espresso.core
     testImplementation deps.espresso.intents
     testImplementation deps.truth
-    testImplementation deps.hamcrest
 
-    // Dependencies for Android unit tests
-    androidTestImplementation deps.junit
-    androidTestImplementation deps.mockito.core
-
-    // AndroidX Test - JVM testing
-    testImplementation deps.atsl.ext_junit
-    testImplementation deps.atsl.runner
-    testImplementation deps.atsl.rules
-    // Once https://issuetracker.google.com/127986458 is fixed this can be testImplementation
-    implementation deps.atsl.core
-
-
-    // AndroidX Test - Instrumented testing
     androidTestImplementation deps.atsl.ext_junit
     androidTestImplementation deps.atsl.runner
     androidTestImplementation deps.atsl.rules
@@ -139,4 +118,9 @@ dependencies {
     androidTestImplementation deps.arch_core.testing
     androidTestImplementation deps.room.testing
     androidTestImplementation deps.espresso.idling_concurrent
+    implementation deps.espresso.idling_resource
+
+    // Room components
+    implementation deps.room.runtime
+    annotationProcessor deps.room.compiler
 }

@@ -56,6 +56,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: [
     executionData = fileTree(dir: "$buildDir", includes: [
             "jacoco/testMockDebugUnitTest.exec",
             "jacoco/testProdDebugUnitTest.exec",
-            "outputs/code-coverage/connected/*coverage.ec"
+            "outputs/code-coverage/mockDebugAndroidTest/connected/*coverage.ec"
     ])
 }
