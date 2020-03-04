@@ -33,7 +33,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             @Override
             public void onSuccess(AuthenticateUserInteractor.Response response) {
                 DoIfNotNull.let(view, LoginContract.View::dismissProgressDialog);
-                if (response != null) {
+                if (response.getUser() != null) {
                     session.setUser(response.getUser());
                     navigator.goToHomeScreen();
                 } else {
