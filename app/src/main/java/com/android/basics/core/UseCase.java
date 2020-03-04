@@ -62,4 +62,8 @@ public abstract class UseCase<P extends UseCase.Request, R extends UseCase.Respo
     public boolean isNotDisposed() {
         return !disposed;
     }
+
+    public boolean isDisposed() {
+        return disposed;
+    }
 }
