@@ -53,7 +53,7 @@ script:
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
-  - ./gradlew jacocoTestReport
+  - ./gradlew clean testMockDebugUnitTestCoverage testProdDebugUnitTestCoverage -info
   
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

@@ -1,65 +1,79 @@
-/**
- * Apply it in the module build.script.
- */
 
 apply plugin: 'jacoco'
 
+jacoco { toolVersion = "0.8.5" }
+
+tasks.withType(Test) { jacoco.includeNoLocationClasses = true }
+
 project.afterEvaluate {
-    def flavors = android.productFlavors.collect { flavor -> flavor.name }
 
-    // If there are no flavors defined, add empty flavor.
-    if (!flavors) flavors.add('')
+    (android.hasProperty('applicationVariants')
+            ? android.'applicationVariants'
+            : android.'libraryVariants').all { variant ->
+        def variantName = variant.name
+        def unitTestTask = "test${variantName.capitalize()}UnitTest"
+        def uiTestCoverageTask = "create${variantName.capitalize()}CoverageReport"
 
-    def buildType = "Debug"
-    flavors.each { productFlavorName ->
-        def taskNameWithFlavor, pathNameWithFlavor
-        if (!productFlavorName) {
-            //empty flavors
-            taskNameWithFlavor = pathNameWithFlavor = "${buildType}"
-        } else {
-            taskNameWithFlavor = "${productFlavorName}${buildType}"
-            pathNameWithFlavor = "${productFlavorName}/${buildType}"
-        }
-        def unitTestsTaskName = "test${taskNameWithFlavor.capitalize()}UnitTest"
-        def uiTestsTaskName = "connected${taskNameWithFlavor.capitalize()}AndroidTest"
-
-        // Create coverage task ex: 'jacocoTestReport<Flavor>' depending on
-        // 'testFlavorDebugUnitTest - unit tests' & connectedFlavorDebugAndroidTest - integration tests.
-        task "jacocoTestReport${productFlavorName.capitalize()}"(type: JacocoReport, dependsOn: [unitTestsTaskName, uiTestsTaskName]) {
+        tasks.create(name: "${unitTestTask}Coverage", type: JacocoReport, dependsOn: [
+                "$unitTestTask",
+                "$uiTestCoverageTask",
+        ]) {
             group = "Reporting"
-            description = "Generate Jacoco coverage reports on the ${taskNameWithFlavor.capitalize()} build."
-
-            classDirectories = fileTree(
-                    dir: "${project.buildDir}/intermediates/classes/${productFlavorName}${buildType.capitalize()}",
-                    excludes: ['**/R.class',
-                               '**/R$*.class',
-                               '**/BuildConfig.class',
-                               '**/Manifest.class',
-                               '**/Manifest$*.class',
-                               '**/*$InjectAdapter.class',
-                               '**/*$ModuleAdapter.class',
-                               '**/*$ViewInjector*.class',
-                               '**/*_MembersInjector.class',
-                               '**/Dagger*Component.class',
-                               '**/Dagger*Component$Builder.class',
-                               '**/*Module_*Factory.class',
-                               '**/*$ViewInjector*.*',
-                               '**/*$ViewBinder*.*'
-                    ])
-
-            def coverageSourceDirs = [
-                    "src/main/java",
-                    "src/$productFlavorName/java",
-                    "src/$buildType/java"
-            ]
-            additionalSourceDirs = files(coverageSourceDirs)
-            sourceDirectories = files(coverageSourceDirs)
-            executionData = fileTree(dir: project.projectDir, includes: ["**/*.exec", "**/*.ec"])
+            description = "Generate Jacoco coverage reports for the ${variantName.capitalize()} build"
 
             reports {
-                xml.enabled = true
                 html.enabled = true
+                xml.enabled = true
+                csv.enabled = false
             }
+
+            def fileFilter = [
+                    '**/R.class',
+                    '**/R$*.class',
+                    '**/BuildConfig.*',
+                    '**/Manifest*.*',
+                    '**/*Test*.*',
+                    '**/com/example/databinding/*',
+                    '**/com/example/generated/callback/*',
+                    '**/android/databinding/*',
+                    '**/androidx/databinding/*',
+                    '**/di/module/*',
+                    '**/*MapperImpl*.*',
+                    '**/*$ViewInjector*.*',
+                    '**/*$ViewBinder*.*',
+                    '**/BuildConfig.*',
+                    '**/*Component*.*',
+                    '**/*BR*.*',
+                    '**/Manifest*.*',
+                    '**/*$Lambda$*.*',
+                    '**/*Companion*.*',
+                    '**/*Module.*',
+                    '**/*Dagger*.*',
+                    '**/*MembersInjector*.*',
+                    '**/*_Factory*.*',
+                    '**/*_Provide*Factory*.*',
+                    '**/*Extensions*.*',
+                    '**/*$Result.*', /* filtering `sealed` and `data` classes */
+                    '**/*$Result$*.*'/* filtering `sealed` and `data` classes */
+            ]
+
+            classDirectories.setFrom(files([
+                    fileTree(dir: "${buildDir}/intermediates/classes/${variantName}", excludes: fileFilter),
+            ]))
+
+            def coverageSourceDirs = [
+                    "$project.rootDir/app/src/main/java",
+                    "$project.projectDir/src/${variantName}/java",
+            ]
+            additionalSourceDirs.setFrom(files(coverageSourceDirs))
+            sourceDirectories.setFrom(files(coverageSourceDirs))
+
+            def uiTestsData = fileTree(dir: "${buildDir}/outputs/code_coverage/${variantName}AndroidTest/connected/", includes: ["**/*.ec"])
+
+            executionData(files([
+                    "$project.buildDir/jacoco/${unitTestTask}.exec",
+                    uiTestsData,
+            ]))
         }
     }
 }
