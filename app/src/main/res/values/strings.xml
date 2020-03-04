@@ -4,4 +4,9 @@
         <item quantity="one">transaction</item>
         <item quantity="other">transactions</item>
     </plurals>
+
+    <string name="username_label">User Name</string>
+    <string name="password_label">Password</string>
+    <string name="registration_error">There was a problem. could not able to register with details.</string>
+    <string name="registration_success">you\'ve successfully registered.</string>
 </resources>

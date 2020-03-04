@@ -53,7 +53,7 @@
                 android:id="@+id/txt_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="UserName"
+                android:text="@string/username_label"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_password"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,7 +72,7 @@
                 android:id="@+id/txt_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Password"
+                android:text="@string/password_label"
                 app:layout_constraintBaseline_toBaselineOf="@+id/edt_password"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_username" />

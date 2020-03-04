@@ -68,7 +68,7 @@ public class RegisterUserActivity extends AppCompatActivity implements RegisterU
         edtPassword.setText("");
 
         //Setting message manually and performing action on button click
-        builder.setMessage("There was a problem. could not able to register with details.")
+        builder.setMessage(getString(R.string.registration_error))
                 .setCancelable(false)
                 .setPositiveButton("Ok", (dialog, id) -> {
                     dialog.dismiss();
@@ -85,7 +85,7 @@ public class RegisterUserActivity extends AppCompatActivity implements RegisterU
 
 
         //Setting message manually and performing action on button click
-        builder.setMessage("you've successfully registered.")
+        builder.setMessage(getString(R.string.registration_success))
                 .setCancelable(false)
                 .setPositiveButton("Ok", (dialog, id) -> {
                     dialog.dismiss();
