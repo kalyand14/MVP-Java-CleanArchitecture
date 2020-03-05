@@ -35,4 +35,9 @@ public class FakeUserRemoteLocalSource implements UserDataSource {
         USER_SERVICE_DATA.put(registeredUser.getUserId(), registeredUser);
         callback.onResponse(registeredUser);
     }
+
+    @Override
+    public void deleteAllUsers() {
+        USER_SERVICE_DATA.clear();
+    }
 }

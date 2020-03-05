@@ -29,27 +29,31 @@ public class RegisterUserPresenter implements RegisterUserContract.Presenter {
     @Override
     public void onRegisterClick(String userName, String password) {
 
-        view.showProgressDialog();
+        if (userName.isEmpty() || password.isEmpty()) {
+            view.showValidationError();
+        } else {
+            view.showProgressDialog();
 
-        useCaseHandler.execute(registerUserInteractor, new RegisterUserInteractor.Request(userName, password), new UseCase.UseCaseCallback<RegisterUserInteractor.Response>() {
-            @Override
-            public void onSuccess(RegisterUserInteractor.Response response) {
-                session.setUser(response.getUser());
+            useCaseHandler.execute(registerUserInteractor, new RegisterUserInteractor.Request(userName, password), new UseCase.UseCaseCallback<RegisterUserInteractor.Response>() {
+                @Override
+                public void onSuccess(RegisterUserInteractor.Response response) {
+                    session.setUser(response.getUser());
 
-                DoIfNotNull.let(view, view -> {
-                    view.dismissProgressDialog();
-                    view.showRegistrationSuccess();
-                });
-            }
+                    DoIfNotNull.let(view, view -> {
+                        view.dismissProgressDialog();
+                        view.showRegistrationSuccess();
+                    });
+                }
 
-            @Override
-            public void onError(Error error) {
-                DoIfNotNull.let(view, view -> {
-                    view.dismissProgressDialog();
-                    view.showRegistrationError();
-                });
-            }
-        });
+                @Override
+                public void onError(Error error) {
+                    DoIfNotNull.let(view, view -> {
+                        view.dismissProgressDialog();
+                        view.showRegistrationError();
+                    });
+                }
+            });
+        }
     }
 
     @Override

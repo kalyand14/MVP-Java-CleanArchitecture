@@ -13,6 +13,8 @@ public interface RegisterUserContract {
 
         void showRegistrationSuccess();
 
+        void showValidationError();
+
     }
 
     interface Presenter extends BasePresenter<View> {

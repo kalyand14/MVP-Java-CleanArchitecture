@@ -97,4 +97,18 @@ public class RegisterUserActivity extends AppCompatActivity implements RegisterU
         alert.show();
 
     }
+
+    @Override
+    public void showValidationError() {
+        //Setting message manually and performing action on button click
+        builder.setMessage(getString(R.string.registration_validation_error))
+                .setCancelable(false)
+                .setPositiveButton("Ok", (dialog, id) -> {
+                    dialog.dismiss();
+                });
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        alert.setTitle("Validation Error");
+        alert.show();
+    }
 }

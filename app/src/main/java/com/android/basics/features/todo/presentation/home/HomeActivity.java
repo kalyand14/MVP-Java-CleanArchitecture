@@ -132,7 +132,7 @@ public class HomeActivity extends AppCompatActivity implements HomeScreenContrac
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.logout:
+            case R.id.menu_action_logout:
                 presenter.onLogout();
                 return true;
             default:

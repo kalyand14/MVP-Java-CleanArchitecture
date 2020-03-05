@@ -2,9 +2,9 @@ package com.android.basics.features.todo.data.source.local;
 
 import androidx.annotation.NonNull;
 
-import com.android.basics.core.utils.AppExecutors;
 import com.android.basics.core.Callback;
 import com.android.basics.core.Error;
+import com.android.basics.core.utils.AppExecutors;
 import com.android.basics.features.todo.data.source.UserDataSource;
 import com.android.basics.features.todo.data.source.local.dao.UserDao;
 import com.android.basics.features.todo.data.source.local.mapper.UserMapper;
@@ -47,16 +47,29 @@ public class UserLocalDataSource implements UserDataSource {
     @Override
     public void register(User in, Callback<User> callback) {
         appExecutors.diskIO().execute(() -> {
-            userDao.insert(in.getUserId(), in.getUserName(), in.getPassword());
-            User user = userMapper.convert(userDao.getUser(in.getUserName(), in.getPassword()));
-            appExecutors.mainThread().execute(() -> {
-                if (user != null) {
-                    callback.onResponse(user);
-                } else {
-                    callback.onError(noDataAvailableError);
-                }
-            });
+            try {
+                userDao.insert(in.getUserId(), in.getUserName(), in.getPassword());
+                User user = userMapper.convert(userDao.getUser(in.getUserName(), in.getPassword()));
+                appExecutors.mainThread().execute(() -> {
+                    if (user != null) {
+                        callback.onResponse(user);
+                    } else {
+                        callback.onError(noDataAvailableError);
+                    }
+                });
+
+            } catch (Exception e) {
+                appExecutors.mainThread().execute(() -> {
+                    callback.onError(operationFailed);
+                });
+            }
+
         });
+    }
+
+    @Override
+    public void deleteAllUsers() {
+        appExecutors.diskIO().execute(userDao::deleteAllUsers);
     }
 
 }

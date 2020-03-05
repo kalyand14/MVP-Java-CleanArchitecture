@@ -30,10 +30,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        btnLogin = findViewById(R.id.btn_add_todo);
+        btnLogin = findViewById(R.id.btn_login);
         btnRegister = findViewById(R.id.btn_signup);
-        edtUserName = findViewById(R.id.edt_todo_name);
-        edtPassword = findViewById(R.id.edt_todo_description);
+        edtUserName = findViewById(R.id.edt_login_username);
+        edtPassword = findViewById(R.id.edt_login_password);
         builder = new AlertDialog.Builder(this);
 
         btnLogin.setOnClickListener(view -> presenter.OnLoginClick(edtUserName.getText().toString(), edtPassword.getText().toString()));
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         edtPassword.setText("");
 
         //Setting message manually and performing action on button click
-        builder.setMessage("There was a problem logging in. Check your credentials or create an account.")
+        builder.setMessage(getString(R.string.login_authentication_error))
                 .setCancelable(false)
                 .setPositiveButton("Ok", (dialog, id) -> {
                     dialog.dismiss();

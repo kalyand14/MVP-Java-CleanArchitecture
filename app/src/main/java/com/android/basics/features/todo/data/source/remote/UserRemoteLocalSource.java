@@ -48,4 +48,9 @@ public class UserRemoteLocalSource implements UserDataSource {
 
 
     }
+
+    @Override
+    public void deleteAllUsers() {
+        USER_SERVICE_DATA.clear();
+    }
 }

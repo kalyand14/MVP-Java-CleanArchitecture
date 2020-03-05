@@ -82,5 +82,11 @@ public class UserDataRepository implements UserRepository {
         });
     }
 
+    @Override
+    public void deleteAllUsers() {
+        userRemoteLocalSource.deleteAllUsers();
+        userLocalDataSource.deleteAllUsers();
+    }
+
 
 }

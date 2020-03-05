@@ -8,4 +8,6 @@ public interface UserDataSource {
     void authenticate(User user, Callback<User> callback);
 
     void register(User user, Callback<User> callback);
+
+    void deleteAllUsers();
 }

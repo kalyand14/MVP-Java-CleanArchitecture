@@ -8,4 +8,6 @@ public interface UserRepository {
 
     void register(User user, Callback<User> callback);
 
+    void deleteAllUsers();
+
 }

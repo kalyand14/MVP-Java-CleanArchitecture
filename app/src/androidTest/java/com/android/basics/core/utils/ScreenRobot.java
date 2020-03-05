@@ -11,6 +11,7 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withHint;
@@ -66,7 +67,7 @@ public abstract class ScreenRobot<T extends ScreenRobot> {
         return (T) this;
     }
 
-    public T clickOkOnView(@IdRes int viewId) {
+    public T clickOnView(@IdRes int viewId) {
         onView(withId(viewId)).perform(click());
         return (T) this;
     }
@@ -90,6 +91,22 @@ public abstract class ScreenRobot<T extends ScreenRobot> {
         onView(withText(messageResId))
                 .inRoot(withDecorView(not(activityContext.getWindow().getDecorView())))
                 .check(matches(isDisplayed()));
+        return (T) this;
+    }
+
+    public T checkDialogWithButtonTextIsDisplayed(String text) {
+        onView(withText(text))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()));
+        return (T) this;
+    }
+
+    public T clickButtonTextOnDialog(String text) {
+        onView(withText(text))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()))
+                .perform(click());
+
         return (T) this;
     }
 
