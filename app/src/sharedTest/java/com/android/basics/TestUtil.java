@@ -1,6 +1,10 @@
 package com.android.basics;
 
 import com.android.basics.core.Error;
+import com.android.basics.features.todo.domain.model.Todo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestUtil {
 
@@ -33,5 +37,12 @@ public class TestUtil {
     public static final String PASSWORD_2 = "mylove";
 
     public static final Error ERROR = new Error(new Exception());
+
+    public static List<Todo> buildFakeTodList() {
+        List<Todo> todoList = new ArrayList<>();
+        todoList.add(new Todo(TestUtil.TODO_ID, TestUtil.USER_ID, TestUtil.NAME, TestUtil.DESCRIPTION, TestUtil.EDIT_DATE, false));
+        todoList.add(new Todo(TestUtil.TODO_ID, TestUtil.USER_ID, TestUtil.NAME, TestUtil.DESCRIPTION, TestUtil.EDIT_DATE, false));
+        return todoList;
+    }
 
 }

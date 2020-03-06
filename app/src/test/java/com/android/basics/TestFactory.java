@@ -11,10 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestFactory {
+
+
     public static List<Todo> buildMockTodList() {
         List<Todo> todoList = new ArrayList<>();
         todoList.add(buildMockTodo("1"));
         todoList.add(buildMockTodo("2"));
+
         return todoList;
     }
 
@@ -23,6 +26,7 @@ public class TestFactory {
         Mockito.when(todo.getTodoId()).thenReturn(todoId);
         return todo;
     }
+
 
     public static List<TodoTbl> buildMockTodoTblList() {
         List<TodoTbl> todoTblList = new ArrayList<>();
