@@ -35,7 +35,7 @@ public class LoginRobot extends ScreenRobot<LoginRobot> {
         return checkDialogWithTextIsDisplayed(R.string.login_authentication_error);
     }
 
-    public LoginRobot login(String username, String password) {
+    public LoginRobot clickLogin(String username, String password) {
         return enterTextIntoView(R.id.edt_login_username, username)
                 .enterTextIntoViewAndCloseKeyBoard(R.id.edt_login_password, password)
                 .clickOnView(R.id.btn_login);
@@ -43,7 +43,7 @@ public class LoginRobot extends ScreenRobot<LoginRobot> {
 
     public void login(ActivityTestRule activityTestRule) {
         this.provideActivityContext(activityTestRule.getActivity())
-                .login(TestUtil.USER_NAME_2, TestUtil.PASSWORD_2)
+                .clickLogin(TestUtil.USER_NAME_2, TestUtil.PASSWORD_2)
                 .checkIsLoggedIn();
     }
 }

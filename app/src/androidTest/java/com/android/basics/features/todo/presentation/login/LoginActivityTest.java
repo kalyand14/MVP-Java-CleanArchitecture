@@ -57,7 +57,7 @@ public class LoginActivityTest {
     public void shouldShowErrorDialogWhenNotValid() {
         withRobot(LoginRobot.class)
                 .provideActivityContext(activityRule.getActivity())
-                .login("", "")
+                .clickLogin("", "")
                 .checkIsErrorDialogShown();
     }
 }
