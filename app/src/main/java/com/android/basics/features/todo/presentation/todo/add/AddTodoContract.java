@@ -13,6 +13,8 @@ public interface AddTodoContract {
         void showErrorDialog();
 
         void showDatePickerDialog();
+
+        void showValidationErrorDialog();
     }
 
     interface Presenter extends BasePresenter<AddTodoContract.View> {

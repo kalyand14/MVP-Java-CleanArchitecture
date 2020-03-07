@@ -7,11 +7,11 @@
     tools:context=".features.todo.presentation.login.LoginActivity">
 
     <TextView
-        android:id="@+id/txt_login_msg"
+        android:id="@+id/txt_todo_add_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Add new Todo"
+        android:text="@string/todo_add_header"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
     <LinearLayout
@@ -21,14 +21,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/txt_todo_name"
+            android:id="@+id/txt_todo_add_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
-            android:text="Name" />
+            android:text="@string/name_label" />
 
         <EditText
-            android:id="@+id/edt_todo_name"
+            android:id="@+id/edt_todo_add_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
@@ -46,14 +46,14 @@
 
 
         <TextView
-            android:id="@+id/txt_todo_description"
+            android:id="@+id/txt_todo_add_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
-            android:text="Description" />
+            android:text="@string/description_label" />
 
         <EditText
-            android:id="@+id/edt_todo_description"
+            android:id="@+id/edt_todo_add_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
@@ -69,12 +69,12 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/txt_todo_date"
+            android:id="@+id/txt_todo_add_date"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight=".3"
-            android:text="Date" />
+            android:text="@string/date_label" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -84,14 +84,14 @@
             android:weightSum="1">
 
             <EditText
-                android:id="@+id/edt_todo_date"
+                android:id="@+id/edt_todo_add_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10" />
 
             <ImageButton
-                android:id="@+id/btn_date"
+                android:id="@+id/btn_todo_add_date"
                 android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".1"
@@ -118,17 +118,17 @@
             android:layout_weight=".7">
 
             <Button
-                android:id="@+id/btn_add_todo"
+                android:id="@+id/btn_todo_todo_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Submit" />
+                android:text="@string/submit_label" />
 
             <Button
-                android:id="@+id/btn_cancel"
+                android:id="@+id/btn_todo_add_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:text="Cancel" />
+                android:text="@string/cancel_label" />
         </LinearLayout>
 
 

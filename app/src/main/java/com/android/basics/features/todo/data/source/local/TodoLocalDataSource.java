@@ -2,9 +2,9 @@ package com.android.basics.features.todo.data.source.local;
 
 import androidx.annotation.NonNull;
 
-import com.android.basics.core.utils.AppExecutors;
 import com.android.basics.core.Callback;
 import com.android.basics.core.Error;
+import com.android.basics.core.utils.AppExecutors;
 import com.android.basics.features.todo.data.source.TodoDataSource;
 import com.android.basics.features.todo.data.source.local.dao.TodoDao;
 import com.android.basics.features.todo.data.source.local.entity.TodoTbl;
@@ -112,5 +112,10 @@ public class TodoLocalDataSource implements TodoDataSource {
                 }
             });
         });
+    }
+
+    @Override
+    public void deleteAllTodo() {
+        appExecutors.diskIO().execute(todoDao::deleteAllTodo);
     }
 }

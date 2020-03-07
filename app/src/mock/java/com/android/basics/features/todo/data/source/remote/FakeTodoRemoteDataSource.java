@@ -72,4 +72,9 @@ public class FakeTodoRemoteDataSource implements TodoDataSource {
         }
         callback.onResponse(true);
     }
+
+    @Override
+    public void deleteAllTodo() {
+        TODO_SERVICE_DATA.clear();
+    }
 }

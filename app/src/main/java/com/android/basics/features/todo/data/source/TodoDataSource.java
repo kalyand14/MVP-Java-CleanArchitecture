@@ -16,4 +16,6 @@ public interface TodoDataSource {
     void addTodo(Todo todo, Callback<Todo> callback);
 
     void deleteTodo(String todoId, Callback<Boolean> callback);
+
+    void deleteAllTodo();
 }

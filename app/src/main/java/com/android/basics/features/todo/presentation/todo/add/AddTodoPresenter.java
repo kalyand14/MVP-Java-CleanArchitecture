@@ -28,37 +28,42 @@ public class AddTodoPresenter implements AddTodoContract.Presenter {
 
     @Override
     public void onSubmit(String name, String desc, String date) {
-        view.showProgressDialog();
 
-        useCaseHandler.execute(
-                addTodoInteractor,
-                new AddTodoInteractor.Request(
-                        session.getUser().getUserId(),
-                        name,
-                        desc,
-                        date
-                ),
-                new UseCase.UseCaseCallback<AddTodoInteractor.Response>() {
-                    @Override
-                    public void onSuccess(AddTodoInteractor.Response response) {
-                        DoIfNotNull.let(view, view -> {
-                            view.dismissProgressDialog();
-                            if (response.isSuccess()) {
-                                view.showSuccessDialog();
-                            } else {
+        if (!name.isEmpty() && !desc.isEmpty() && !date.isEmpty()) {
+            view.showProgressDialog();
+
+            useCaseHandler.execute(
+                    addTodoInteractor,
+                    new AddTodoInteractor.Request(
+                            session.getUser().getUserId(),
+                            name,
+                            desc,
+                            date
+                    ),
+                    new UseCase.UseCaseCallback<AddTodoInteractor.Response>() {
+                        @Override
+                        public void onSuccess(AddTodoInteractor.Response response) {
+                            DoIfNotNull.let(view, view -> {
+                                view.dismissProgressDialog();
+                                if (response.isSuccess()) {
+                                    view.showSuccessDialog();
+                                } else {
+                                    view.showErrorDialog();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            DoIfNotNull.let(view, view -> {
+                                view.dismissProgressDialog();
                                 view.showErrorDialog();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(Error error) {
-                        DoIfNotNull.let(view, view -> {
-                            view.dismissProgressDialog();
-                            view.showErrorDialog();
-                        });
-                    }
-                });
+                            });
+                        }
+                    });
+        } else {
+            view.showValidationErrorDialog();
+        }
 
 
     }

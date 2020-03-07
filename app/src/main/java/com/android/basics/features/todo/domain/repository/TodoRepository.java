@@ -15,4 +15,6 @@ public interface TodoRepository {
     void addTodo(Todo todo, Callback<Boolean> callback);
 
     void deleteTodo(String todoId, Callback<Boolean> callback);
+
+    void deleteAllTodo();
 }

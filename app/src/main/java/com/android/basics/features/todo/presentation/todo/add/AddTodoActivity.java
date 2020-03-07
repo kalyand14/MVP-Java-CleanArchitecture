@@ -38,17 +38,17 @@ public class AddTodoActivity extends AppCompatActivity implements AddTodoContrac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_todo);
 
-        setTitle("Add Todo");
+        setTitle(getString(R.string.todo_add_title));
 
         builder = new AlertDialog.Builder(this);
 
-        edtName = findViewById(R.id.edt_todo_name);
-        edtDescription = findViewById(R.id.edt_todo_description);
-        edtDate = findViewById(R.id.edt_todo_date);
+        edtName = findViewById(R.id.edt_todo_add_name);
+        edtDescription = findViewById(R.id.edt_todo_add_description);
+        edtDate = findViewById(R.id.edt_todo_add_date);
 
-        btnSubmit = findViewById(R.id.btn_add_todo);
-        btnCancel = findViewById(R.id.btn_cancel);
-        btnDate = findViewById(R.id.btn_date);
+        btnSubmit = findViewById(R.id.btn_todo_todo_submit);
+        btnCancel = findViewById(R.id.btn_todo_add_cancel);
+        btnDate = findViewById(R.id.btn_todo_add_date);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,9 +100,9 @@ public class AddTodoActivity extends AppCompatActivity implements AddTodoContrac
     public void showSuccessDialog() {
 
         //Setting message manually and performing action on button click
-        builder.setMessage("New record successfully inserted.")
+        builder.setMessage(getString(R.string.todo_add_success_msg))
                 .setCancelable(false)
-                .setPositiveButton("Ok", (dialog, id) -> {
+                .setPositiveButton(getString(android.R.string.ok), (dialog, id) -> {
                     dialog.dismiss();
                     presenter.navigateToViewTodoList();
                 });
@@ -116,9 +116,9 @@ public class AddTodoActivity extends AppCompatActivity implements AddTodoContrac
     public void showErrorDialog() {
 
         //Setting message manually and performing action on button click
-        builder.setMessage("There was a problem. could not able to insert the record.")
+        builder.setMessage(getString(R.string.todo_add_error_msg))
                 .setCancelable(false)
-                .setPositiveButton("Ok", (dialog, id) -> {
+                .setPositiveButton(getString(android.R.string.ok), (dialog, id) -> {
                     dialog.dismiss();
                 });
         //Creating dialog box
@@ -145,6 +145,20 @@ public class AddTodoActivity extends AppCompatActivity implements AddTodoContrac
     }
 
     @Override
+    public void showValidationErrorDialog() {
+        //Setting message manually and performing action on button click
+        builder.setMessage(getString(R.string.registration_validation_error))
+                .setCancelable(false)
+                .setPositiveButton("Ok", (dialog, id) -> {
+                    dialog.dismiss();
+                });
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        alert.setTitle("Validation Error");
+        alert.show();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.form_menu, menu);
@@ -155,7 +169,7 @@ public class AddTodoActivity extends AppCompatActivity implements AddTodoContrac
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.cancel:
+            case R.id.menu_action_cancel:
                 presenter.OnCancel();
                 return true;
             default:

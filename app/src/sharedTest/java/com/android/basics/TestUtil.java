@@ -4,6 +4,7 @@ import com.android.basics.core.Error;
 import com.android.basics.features.todo.domain.model.Todo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class TestUtil {
@@ -43,6 +44,15 @@ public class TestUtil {
         todoList.add(new Todo(TestUtil.TODO_ID, TestUtil.USER_ID, TestUtil.NAME, TestUtil.DESCRIPTION, TestUtil.EDIT_DATE, false));
         todoList.add(new Todo(TestUtil.TODO_ID, TestUtil.USER_ID, TestUtil.NAME, TestUtil.DESCRIPTION, TestUtil.EDIT_DATE, false));
         return todoList;
+    }
+
+    public static Integer[] getDateString() {
+        Calendar calendar = Calendar.getInstance();
+        Integer[] dateString = new Integer[3];
+        dateString[0] = calendar.get(Calendar.YEAR);
+        dateString[1] = calendar.get(Calendar.MONTH) + 1;
+        dateString[2] = calendar.get(Calendar.DAY_OF_MONTH);
+        return dateString;
     }
 
 }

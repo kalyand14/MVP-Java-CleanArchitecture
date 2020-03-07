@@ -40,9 +40,9 @@ public class EditTodoActivity extends AppCompatActivity implements EditTodoContr
 
         builder = new AlertDialog.Builder(this);
 
-        edtName = findViewById(R.id.edt_todo_name);
-        edtDescription = findViewById(R.id.edt_todo_description);
-        edtDate = findViewById(R.id.edt_todo_date);
+        edtName = findViewById(R.id.edt_todo_add_name);
+        edtDescription = findViewById(R.id.edt_todo_add_description);
+        edtDate = findViewById(R.id.edt_todo_add_date);
 
         btnSubmit = findViewById(R.id.btn_edit_todo);
         btnDelete = findViewById(R.id.btn_edit_delete);
@@ -166,7 +166,7 @@ public class EditTodoActivity extends AppCompatActivity implements EditTodoContr
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.cancel:
+            case R.id.menu_action_cancel:
                 presenter.OnCancel();
                 return true;
             default:

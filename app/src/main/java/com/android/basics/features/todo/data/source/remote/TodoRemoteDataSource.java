@@ -93,4 +93,9 @@ public class TodoRemoteDataSource implements TodoDataSource {
         handler.postDelayed(() -> callback.onResponse(true),
                 SERVICE_LATENCY_IN_MILLIS);
     }
+
+    @Override
+    public void deleteAllTodo() {
+        TODO_SERVICE_DATA.clear();
+    }
 }

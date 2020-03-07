@@ -159,4 +159,10 @@ public class TodoDataRepository implements TodoRepository {
             }
         });
     }
+
+    @Override
+    public void deleteAllTodo() {
+        todoRemoteDataSource.deleteAllTodo();
+        todoLocalDataSource.deleteAllTodo();
+    }
 }
