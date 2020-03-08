@@ -16,6 +16,7 @@ import org.hamcrest.Matcher;
 import java.util.Calendar;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
@@ -91,6 +92,11 @@ public abstract class ScreenRobot<T extends ScreenRobot> {
 
     public T enterTextIntoView(@IdRes int viewId, String text) {
         onView(withId(viewId)).perform(typeText(text));
+        return (T) this;
+    }
+
+    public T clearTextFromView(@IdRes int viewId) {
+        onView(withId(viewId)).perform(clearText());
         return (T) this;
     }
 

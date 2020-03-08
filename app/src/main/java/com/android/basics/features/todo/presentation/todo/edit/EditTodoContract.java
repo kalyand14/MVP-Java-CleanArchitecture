@@ -20,6 +20,8 @@ public interface EditTodoContract {
         void setDescription(String description);
 
         void setDate(String date);
+
+        void showValidationErrorDialog();
     }
 
     interface Presenter extends BasePresenter<View> {

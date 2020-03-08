@@ -75,7 +75,7 @@ public class AddTodoActivityTest {
     public void shouldDisplaySuccessDialogWhenFieldsAreValid() {
         withRobot(AddTodoRobot.class)
                 .provideActivityContext(activityRule.getActivity())
-                .fillFormAndSubmit(TestUtil.NAME, TestUtil.DESCRIPTION, TestUtil.getDateString())
+                .fillFormAndSubmit(TestUtil.NAME, TestUtil.DESCRIPTION, TestUtil.getDateString(1))
                 .isSuccess();
     }
 
@@ -83,7 +83,7 @@ public class AddTodoActivityTest {
     public void shouldDisplayErrorDialogWhenFieldsAreNotValid() {
         withRobot(AddTodoRobot.class)
                 .provideActivityContext(activityRule.getActivity())
-                .fillFormAndSubmit("", TestUtil.DESCRIPTION, TestUtil.getDateString())
+                .fillFormAndSubmit("", TestUtil.DESCRIPTION, TestUtil.getDateString(1))
                 .isFailure();
     }
 

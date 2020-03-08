@@ -46,13 +46,19 @@ public class TestUtil {
         return todoList;
     }
 
-    public static Integer[] getDateString() {
+    public static Integer[] getDateString(int days) {
         Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, days);
         Integer[] dateString = new Integer[3];
         dateString[0] = calendar.get(Calendar.YEAR);
         dateString[1] = calendar.get(Calendar.MONTH) + 1;
         dateString[2] = calendar.get(Calendar.DAY_OF_MONTH);
         return dateString;
+    }
+
+    public static String getFormattedDateString(int days) {
+        Integer[] datePart = getDateString(days);
+        return datePart[2] + "/" + datePart[1]  + "/" + datePart[0];
     }
 
 }

@@ -7,7 +7,7 @@
     tools:context=".features.todo.presentation.login.LoginActivity">
 
     <TextView
-        android:id="@+id/txt_todo_add_header"
+        android:id="@+id/txt_todo_edit_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/registration_header"

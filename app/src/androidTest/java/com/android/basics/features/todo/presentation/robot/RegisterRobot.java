@@ -17,7 +17,7 @@ public class RegisterRobot extends ScreenRobot<RegisterRobot> {
     }
 
     public RegisterRobot checkIsScreenHeaderShown() {
-        return checkViewHasText(R.id.txt_todo_add_header, R.string.registration_header);
+        return checkViewHasText(R.id.txt_todo_edit_header, R.string.registration_header);
     }
 
     public RegisterRobot checkUserNameAndPasswordLabelsDisplayed() {

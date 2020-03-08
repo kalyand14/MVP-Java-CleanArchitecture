@@ -12,13 +12,13 @@ public class AddTodoRobot extends ScreenRobot<AddTodoRobot> {
     }
 
     public void checkIsScreenHeaderShown() {
-        checkViewHasText(R.id.txt_todo_add_header, R.string.todo_add_header);
+        checkViewHasText(R.id.txt_todo_edit_header, R.string.todo_add_header);
     }
 
     public void checkLabelsAreDisplayed() {
-        checkViewHasText(R.id.txt_todo_add_name, R.string.name_label);
-        checkViewHasText(R.id.txt_todo_add_description, R.string.description_label);
-        checkViewHasText(R.id.txt_todo_add_date, R.string.date_label);
+        checkViewHasText(R.id.txt_todo_edit_name, R.string.name_label);
+        checkViewHasText(R.id.txt_todo_edit_description, R.string.description_label);
+        checkViewHasText(R.id.txt_todo_edit_date, R.string.date_label);
     }
 
     public void checkButtonLabels() {
@@ -31,7 +31,7 @@ public class AddTodoRobot extends ScreenRobot<AddTodoRobot> {
     }
 
     public AddTodoRobot isFailure() {
-        return checkDialogWithTextIsDisplayed(R.string.toto_add_validation_error);
+        return checkDialogWithTextIsDisplayed(R.string.todo_add_validation_error);
     }
 
     public HomeScreenRobot cancel() {
@@ -41,8 +41,8 @@ public class AddTodoRobot extends ScreenRobot<AddTodoRobot> {
 
     public AddTodoRobot fillFormAndSubmit(String name, String description, Integer[] date) {
         Calendar calendar = Calendar.getInstance();
-        return enterTextIntoView(R.id.edt_todo_add_name, name)
-                .enterTextIntoViewAndCloseKeyBoard(R.id.edt_todo_add_description, description)
+        return enterTextIntoView(R.id.edt_todo_edit_name, name)
+                .enterTextIntoViewAndCloseKeyBoard(R.id.edt_todo_edit_description, description)
                 .enterDateIntoView(R.id.btn_todo_add_date, date[0], date[1], date[2])
                 .clickOnView(R.id.btn_todo_todo_submit);
     }

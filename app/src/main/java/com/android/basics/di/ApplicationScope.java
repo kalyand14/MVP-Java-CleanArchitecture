@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.basics.core.di.InstanceContainer;
 import com.android.basics.core.navigation.BundleFactory;
 import com.android.basics.core.navigation.IntentFactory;
-import  com.android.basics.core.navigation.Navigator;
+import com.android.basics.core.navigation.Navigator;
 import com.android.basics.features.todo.domain.repository.TodoRepository;
 import com.android.basics.features.todo.domain.repository.UserRepository;
 
@@ -15,12 +15,7 @@ public class ApplicationScope {
     private InstanceContainer container = new InstanceContainer();
     private static ApplicationScope instance = null;
 
-
     private ApplicationModule module;
-
-    public void setModule(ApplicationModule module) {
-        this.module = module;
-    }
 
     private ApplicationScope() {
     }
@@ -72,6 +67,15 @@ public class ApplicationScope {
     @VisibleForTesting
     public void setContainer(InstanceContainer container) {
         this.container = container;
+    }
+
+
+    public void setModule(ApplicationModule module) {
+        this.module = module;
+    }
+
+    public ApplicationModule getModule() {
+        return module;
     }
 
 

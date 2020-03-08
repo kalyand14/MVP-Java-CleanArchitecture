@@ -31,6 +31,8 @@ public class ApplicationModule {
 
     private Application application;
 
+    private TodoRepository todoRepository;
+
     public ApplicationModule(Application application) {
         this.application = application;
     }
@@ -48,11 +50,17 @@ public class ApplicationModule {
     }
 
     public UserRepository provideUserRepository(UserDataSource localDataSource, UserDataSource remoteDataSource) {
+
+
         return UserDataRepository.getInstance(localDataSource, remoteDataSource);
     }
 
     public TodoRepository provideTodoRepository(TodoDataSource localDataSource, TodoDataSource remoteDataSource) {
-        return TodoDataRepository.getInstance(localDataSource, remoteDataSource);
+        if (todoRepository != null) {
+            return todoRepository;
+        } else {
+            return TodoDataRepository.getInstance(localDataSource, remoteDataSource);
+        }
     }
 
     public UserDataSource provideUserLocalDataSource() {
@@ -104,5 +112,9 @@ public class ApplicationModule {
 
     public Application getApplication() {
         return application;
+    }
+
+    public void setTodoRepository(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
     }
 }

@@ -36,16 +36,16 @@ public class EditTodoActivity extends AppCompatActivity implements EditTodoContr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_todo);
 
-        setTitle("Edit Todo");
+        setTitle(getString(R.string.todo_edit_title));
 
         builder = new AlertDialog.Builder(this);
 
-        edtName = findViewById(R.id.edt_todo_add_name);
-        edtDescription = findViewById(R.id.edt_todo_add_description);
+        edtName = findViewById(R.id.edt_todo_edit_name);
+        edtDescription = findViewById(R.id.edt_todo_edit_description);
         edtDate = findViewById(R.id.edt_todo_add_date);
 
-        btnSubmit = findViewById(R.id.btn_edit_todo);
-        btnDelete = findViewById(R.id.btn_edit_delete);
+        btnSubmit = findViewById(R.id.btn_todo_update);
+        btnDelete = findViewById(R.id.btn_todo_delete);
         btnDate = findViewById(R.id.btn_edit_date);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -173,4 +173,19 @@ public class EditTodoActivity extends AppCompatActivity implements EditTodoContr
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void showValidationErrorDialog() {
+        //Setting message manually and performing action on button click
+        builder.setMessage(getString(R.string.todo_edit_validation_error))
+                .setCancelable(false)
+                .setPositiveButton("Ok", (dialog, id) -> {
+                    dialog.dismiss();
+                });
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        alert.setTitle("Validation Error");
+        alert.show();
+    }
+
 }

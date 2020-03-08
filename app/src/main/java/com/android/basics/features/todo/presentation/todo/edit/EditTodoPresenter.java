@@ -41,32 +41,38 @@ public class EditTodoPresenter implements EditTodoContract.Presenter {
 
     @Override
     public void onSubmit(String name, String desc, String date) {
-        view.showProgressDialog("Updating todo");
 
-        useCaseHandler.execute(
-                editTodoInteractor,
-                new EditTodoInteractor.Request(session.getTodo().getTodoId(), session.getTodo().getUserId(), name, desc, date),
-                new UseCase.UseCaseCallback<EditTodoInteractor.Response>() {
-                    @Override
-                    public void onSuccess(EditTodoInteractor.Response response) {
-                        DoIfNotNull.let(view, view -> {
-                            view.dismissProgressDialog();
-                            if (response.isSuccess()) {
-                                view.showSuccessDialog("Record successfully updated.");
-                            } else {
+        if (!name.isEmpty() && !desc.isEmpty() && !date.isEmpty()) {
+            view.showProgressDialog("Updating todo");
+
+            useCaseHandler.execute(
+                    editTodoInteractor,
+                    new EditTodoInteractor.Request(session.getTodo().getTodoId(), session.getTodo().getUserId(), name, desc, date),
+                    new UseCase.UseCaseCallback<EditTodoInteractor.Response>() {
+                        @Override
+                        public void onSuccess(EditTodoInteractor.Response response) {
+                            DoIfNotNull.let(view, view -> {
+                                view.dismissProgressDialog();
+                                if (response.isSuccess()) {
+                                    view.showSuccessDialog("Record successfully updated.");
+                                } else {
+                                    view.showErrorDialog("There was a problem. could not able to update the record.");
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            DoIfNotNull.let(view, view -> {
+                                view.dismissProgressDialog();
                                 view.showErrorDialog("There was a problem. could not able to update the record.");
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(Error error) {
-                        DoIfNotNull.let(view, view -> {
-                            view.dismissProgressDialog();
-                            view.showErrorDialog("There was a problem. could not able to update the record.");
-                        });
-                    }
-                });
+                            });
+                        }
+                    });
+        }
+        else{
+            view.showValidationErrorDialog();
+        }
     }
 
     @Override

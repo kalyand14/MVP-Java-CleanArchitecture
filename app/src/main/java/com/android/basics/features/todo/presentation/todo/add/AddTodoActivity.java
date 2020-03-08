@@ -42,8 +42,8 @@ public class AddTodoActivity extends AppCompatActivity implements AddTodoContrac
 
         builder = new AlertDialog.Builder(this);
 
-        edtName = findViewById(R.id.edt_todo_add_name);
-        edtDescription = findViewById(R.id.edt_todo_add_description);
+        edtName = findViewById(R.id.edt_todo_edit_name);
+        edtDescription = findViewById(R.id.edt_todo_edit_description);
         edtDate = findViewById(R.id.edt_todo_add_date);
 
         btnSubmit = findViewById(R.id.btn_todo_todo_submit);
