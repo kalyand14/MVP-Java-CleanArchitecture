@@ -49,7 +49,7 @@ before_script:
   - chmod +x gradlew
 
 script:
-  - ./gradlew testMockDebugUnitTest testProdDebugUnitTest assembledMockDebugAndroidTest
+  - ./gradlew testMockDebugUnitTest testProdDebugUnitTest assembleMockDebugAndroidTest
   - echo no | android create avd --force -n test -t android-$ANDROID_TEST_API --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
